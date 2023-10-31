@@ -1,21 +1,23 @@
-import './App.css'
-import { useCookies } from 'react-cookie';
+import { useContext, useEffect } from 'react';
+import Home from './components/Home';
+import Login from './components/Login';
+import { UserContext } from './providers/UserContextProvider';
+import { loginUser, registerUser } from './actions/userActions';
 
-function App() {
+export default function App() {
+
+  const userContext = useContext(UserContext);
   const params = new URLSearchParams(window.location.search);
-  const [cookie, setCookie] = useCookies(['user']);
-  params.get('cookie') && setCookie('session', params.get('cookie'), {path: '/'});
 
-  return (
-    <>
-      {
-        params.get("error") ? 
-          <p>Error occured in auth: {params.get("error")}</p> :
-          cookie.session ?
-            <p>Logged in</p> :
-            <a href='http://localhost:8000/jukebox/login'>Login with spotify</a>}
-    </>
-  )
+  useEffect(() => {
+    if(params.get("code") && params.get("state")){
+      registerUser(userContext.dispatch, params);
+    }else{
+      loginUser(userContext.dispatch);
+    }
+  }, [])
+  
+
+
+  return userContext.user.errorMessage ?  ( <Login/> ) : (<Home/>);
 }
-
-export default App
