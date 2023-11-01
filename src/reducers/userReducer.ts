@@ -3,9 +3,16 @@ import { ActionType, USER_LOGIN_FAILURE, USER_LOGIN_SUCCESSFULL, USER_REGISTRATI
 export default function userContextReducer(state: UserType, action: ActionType): UserType{
     switch(action.type){
         case USER_LOGIN_SUCCESSFULL:
-            return action.payload as UserType;
+            return {
+                ...state,
+                ...action.payload,
+                errorMessage: ""
+            };
         case USER_REGISTRATION_SUCCESSFULL:
-            return state;
+            return {
+                errorMessage: "",
+                registered: true
+            } as UserType;
         case USER_LOGIN_FAILURE:
         case USER_REGISTRATION_FAILURE:
             return {errorMessage: action.payload.message} as UserType;
@@ -20,5 +27,6 @@ export type UserType = {
     createTimeStamp: string,
     updateTimeStamp: string,
     roles: Array<string>,
-    errorMessage: string
+    errorMessage: string,
+    registered: boolean
 }
