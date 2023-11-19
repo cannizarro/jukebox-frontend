@@ -13,7 +13,7 @@ export default function Home(){
       <Container fluid>
         <div className="float-end">
             {  
-                <p>Logged in as {userContext.user.displayName}</p>
+              <p>Logged in as {userContext.user.displayName}</p>
             }
         </div>
       </Container>

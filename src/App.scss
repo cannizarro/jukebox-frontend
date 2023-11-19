@@ -1,0 +1,36 @@
+@use "scss/margins";
+@use "scss/colors";
+
+$theme-colors: (
+    "primary": colors.$primary,
+    "secondary": colors.$primary-light,
+    "success": colors.$success,
+    "info": colors.$info,
+    "warning": colors.$warning,
+    "danger": colors.$danger,
+    "light": colors.$light,
+    "dark": colors.$dark
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+%full-screen {
+    height: 100%;
+    margin: 0;
+}
+
+html, body, #root, .cover-full-screen {
+    @extend %full-screen
+}
+
+.vertical-centered-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.vertically-centered-content{
+    margin-bottom: auto;
+    margin-top: auto;
+}

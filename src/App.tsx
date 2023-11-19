@@ -7,5 +7,5 @@ export default function App() {
 
   const userContext = useContext(UserContext);
   
-  return userContext.user.errorMessage ?  ( <Login/> ) : (<Home/>);
+  return userContext.user.username ?  (<Home/>) : ( <Login/> );
 }
