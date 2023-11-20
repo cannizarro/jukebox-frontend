@@ -1,5 +1,4 @@
 import AppNavbar from './common/AppNavbar';
-import { Container } from 'reactstrap';
 import { useContext } from 'react';
 import { UserContext } from '../providers/UserContextProvider';
 
@@ -9,14 +8,8 @@ export default function Home(){
 
   return (
     <div>
-      <AppNavbar/>
-      <Container fluid>
-        <div className="float-end">
-            {  
-              <p>Logged in as {userContext.user.displayName}</p>
-            }
-        </div>
-      </Container>
+      <AppNavbar dispatch={userContext.dispatch}/>
+      <p>Logged in as {userContext.user.displayName}</p>
     </div>
   );
 }

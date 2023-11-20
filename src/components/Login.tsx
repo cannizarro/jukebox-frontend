@@ -1,12 +1,19 @@
 import { useContext } from "react";
 import { UserContext } from "../providers/UserContextProvider";
 import { Button, PopoverBody, Spinner, UncontrolledPopover } from "reactstrap";
+import { setUserLoading } from "../actions/userActions";
 
 export default function Login(): React.JSX.Element {
     const userContext = useContext(UserContext);
     return (
         <div className="vertical-centered-container cover-full-screen">
-            <Button color="primary" disabled={userContext.user.isLoading} className="vertically-centered-content" href="http://localhost:8080/jukebox/public/login">
+            <Button 
+                color="primary" 
+                disabled={userContext.user.isLoading} 
+                className="vertically-centered-content" 
+                href="http://localhost:8080/jukebox/public/login"
+                onClick={() => setUserLoading(userContext.dispatch)}
+            >
                 {userContext.user.isLoading ? 
                     <Spinner/> :
                     "Login with spotify"
@@ -27,7 +34,7 @@ export default function Login(): React.JSX.Element {
                 trigger="legacy"
             >
                 <PopoverBody>
-                    {userContext.user.errorMessage && <p>Token has expired. Please log in again.</p>}
+                    <p>Token has expired. Please log in again.</p>
                 </PopoverBody>
             </UncontrolledPopover>
         </div>

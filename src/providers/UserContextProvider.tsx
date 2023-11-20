@@ -7,7 +7,7 @@ export const UserContext = createContext<UserContextType>({} as UserContextType)
 
 export function UserContextProvider({ children }: PropsType){
 
-    const [user, dispatch] = useReducer(userContextReducer, {errorMessage: "Please Login"} as UserType);
+    const [user, dispatch] = useReducer(userContextReducer, {} as UserType);
 
     useEffect(() => {
         loginUser(dispatch)
@@ -33,5 +33,5 @@ type PropsType = {
 
 export type UserContextType = {
     user: UserType,
-    dispatch: React.Dispatch<ActionType>,
+    dispatch: React.Dispatch<ActionType>
 }

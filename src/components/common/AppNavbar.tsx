@@ -1,26 +1,31 @@
 import { useState } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Button, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { APP_NAME } from './constants';
+import { ActionType } from '../../actions/constants/actionTypes';
+import { logoutUser } from '../../actions/userActions';
 
-const AppNavbar = () => {
+export default function AppNavbar(props: PropsType) {
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Navbar color="dark" dark expand="md">
-      <NavbarBrand to="/">Home</NavbarBrand>
+      <NavbarBrand to="/">{APP_NAME}</NavbarBrand>
       <NavbarToggler onClick={() => { setIsOpen(!isOpen) }}/>
       <Collapse isOpen={isOpen} navbar>
         <Nav className="justify-content-end" style={{width: "100%"}} navbar>
           <NavItem>
-            <NavLink href="https://twitter.com/oktadev">@oktadev</NavLink>
+            <NavLink href="https://open.spotify.com" target="_blank">Spotify</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/oktadev/okta-spring-boot-react-crud-example">GitHub</NavLink>
+            <Button onClick={() => logoutUser(props.dispatch)}>Logout</Button>
           </NavItem>
         </Nav>
       </Collapse>
     </Navbar>
   );
-};
+}
 
-export default AppNavbar;
+type PropsType = {
+  dispatch: React.Dispatch<ActionType>
+}
