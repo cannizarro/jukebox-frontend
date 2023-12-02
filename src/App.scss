@@ -18,11 +18,11 @@ $theme-colors: (
     width: 100%;
 }
 
-html, body, #root, main, .activity {
+html, body, #root, .activity {
     @extend %full-screen
 }
 
-main{
+.activity{
     padding-top: 64px;
 }
 

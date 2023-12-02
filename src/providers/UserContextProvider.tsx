@@ -15,6 +15,7 @@ export function UserContextProvider({ children }: PropsType){
                 const params = new URLSearchParams(window.location.search);
                 if(params.get("code") && params.get("state")){
                     registerUser(dispatch, params);
+                    window.history.replaceState(window.history.state, "", "/");
                 }
             });
     }, [dispatch, user.registered]);

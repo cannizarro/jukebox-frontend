@@ -14,7 +14,9 @@ export default function App() {
   return (
     <>
       <AppNavbar dispatch={userContext.dispatch} isLoggedIn={Boolean(userContext.user.username)}/>
-      <main>{userContext.user.username ?  <Home/> : <Login/>}</main>
+      
+      {userContext.user.username ?  <Home/> : <Login/>}
+      
       <footer className="py-4 bg-dark d-flex text-light justify-content-around">
         <div className="d-flex flex-column align-items-center">
           <img src="logo.svg" className="logo"/>
