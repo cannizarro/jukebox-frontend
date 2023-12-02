@@ -6,11 +6,11 @@ import { setUserLoading } from "../actions/userActions";
 export default function Login(): React.JSX.Element {
     const userContext = useContext(UserContext);
     return (
-        <div className="vertical-centered-container cover-full-screen">
+        <div className="d-flex flex-column justify-content-center align-items-center activity">
             <Button 
                 color="primary" 
                 disabled={userContext.user.isLoading} 
-                className="vertically-centered-content" 
+                className="mt-auto mb-auto" 
                 href="http://localhost:8080/jukebox/public/login"
                 onClick={() => setUserLoading(userContext.dispatch)}
             >
@@ -23,7 +23,7 @@ export default function Login(): React.JSX.Element {
                 id="login-message"
                 outline
                 color="link"
-                className="m4"
+                className="m-4"
                 size="sm"
             >
                 Show Message

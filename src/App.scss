@@ -1,4 +1,3 @@
-@use "scss/margins";
 @use "scss/colors";
 
 $theme-colors: (
@@ -16,21 +15,20 @@ $theme-colors: (
 
 %full-screen {
     height: 100%;
-    margin: 0;
+    width: 100%;
 }
 
-html, body, #root, .cover-full-screen {
+html, body, #root, main, .activity {
     @extend %full-screen
 }
 
-.vertical-centered-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+main{
+    padding-top: 64px;
 }
 
-.vertically-centered-content{
-    margin-bottom: auto;
-    margin-top: auto;
+
+img.logo {
+    width: 30px;
+    height: 30px;
+    margin: 4px;
 }
