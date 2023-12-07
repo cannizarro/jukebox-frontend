@@ -15,8 +15,6 @@ export function UserContextProvider({ children }: PropsType){
                 const params = new URLSearchParams(window.location.search);
                 if(params.get("code") && params.get("state")){
                     registerUser(dispatch, params);
-                    // replacing the current url containing query string with hostname
-                    location.replace(window.location.href.split('?')[0]);
                 }
             });
     }, [dispatch, user.registered]);

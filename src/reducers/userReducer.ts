@@ -8,6 +8,8 @@ export default function userContextReducer(state: UserType, action: ActionType):
                 ...action.payload
             };
         case USER_REGISTRATION_SUCCESSFULL:
+            // replacing the current url containing query string with hostname
+            location.replace(window.location.href.split('?')[0]);
             return {
                 registered: true
             } as UserType;
