@@ -1,34 +1,36 @@
 @use "scss/colors";
 
 $theme-colors: (
-    "primary": colors.$primary,
-    "secondary": colors.$primary-light,
-    "success": colors.$success,
-    "info": colors.$info,
-    "warning": colors.$warning,
-    "danger": colors.$danger,
-    "light": colors.$light,
-    "dark": colors.$dark
+	"primary": colors.$primary,
+	"secondary": colors.$primary-light,
+	"success": colors.$success,
+	"info": colors.$info,
+	"warning": colors.$warning,
+	"danger": colors.$danger,
+	"light": colors.$light,
+	"dark": colors.$dark,
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 %full-screen {
-    height: 100%;
-    width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
-html, body, #root, .activity {
-    @extend %full-screen
+html,
+body,
+#root,
+.activity {
+	@extend %full-screen;
 }
 
-.activity{
-    padding-top: 64px;
+.activity {
+	padding-top: 64px;
 }
-
 
 img.logo {
-    width: 30px;
-    height: 30px;
-    margin: 4px;
+	width: 30px;
+	height: 30px;
+	margin: 4px;
 }

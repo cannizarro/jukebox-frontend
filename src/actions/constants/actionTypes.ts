@@ -1,8 +1,8 @@
 export type ActionType = {
-    type: string,
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    payload: any
-}
+	type: string;
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+	payload: any;
+};
 
 export const USER_LOGIN_SUCCESSFULL = "USER_LOGIN_SUCCESSFULL";
 export const USER_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
