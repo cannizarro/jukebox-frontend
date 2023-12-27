@@ -14,18 +14,11 @@ $theme-colors: (
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 %full-screen {
-	height: 100%;
-	width: 100%;
+	min-height: 100vh;
 }
 
-html,
-body,
-#root,
 .activity {
 	@extend %full-screen;
-}
-
-.activity {
 	padding-top: 64px;
 }
 

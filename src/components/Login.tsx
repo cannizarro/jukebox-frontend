@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { UserContext } from "../providers/UserContextProvider";
 import { Button, PopoverBody, Spinner, UncontrolledPopover } from "reactstrap";
 import { setUserLoading } from "../actions/userActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
 export default function Login(): React.JSX.Element {
 	const userContext = useContext(UserContext);
@@ -14,11 +16,13 @@ export default function Login(): React.JSX.Element {
 				href="http://localhost:8080/jukebox/public/login"
 				onClick={() => setUserLoading(userContext.dispatch)}
 			>
-				{userContext.user.isLoading ? (
+				{userContext.user.isLoading ?
 					<Spinner />
-				) : (
-					"Login with spotify"
-				)}
+				:   <>
+						<FontAwesomeIcon icon={faSpotify} className="me-2"/>
+						Login with spotify
+					</>
+				}
 			</Button>
 			<Button
 				id="login-message"
