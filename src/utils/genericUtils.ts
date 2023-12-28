@@ -1,6 +1,8 @@
-export function formatDateTo12Hour(dateString: string): string {
-	const date = new Date(dateString);
+export function formatStringTo12HourDate(dateString: string): string {
+	return formatDateTo12Hour(new Date(dateString));
+}
 
+export function formatDateTo12Hour(date: Date){
 	const options = {
 		year: "numeric",
 		month: "short",
@@ -10,9 +12,9 @@ export function formatDateTo12Hour(dateString: string): string {
 		second: "numeric",
 		hour12: true, // Use 12-hour clock
 	};
-
 	return date.toLocaleDateString(
 		"en-US",
 		options as Intl.DateTimeFormatOptions,
 	);
+		
 }
