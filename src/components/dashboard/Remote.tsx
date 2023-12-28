@@ -6,7 +6,7 @@ import {
 	faForwardFast,
 } from "@fortawesome/free-solid-svg-icons";
 import { DeviceType, TrackType } from "../Home";
-import { pausePlayback, resumePlayback } from "../../actions/playbackStateActions";
+import { pausePlayback, resumePlayback, skipNext } from "../../actions/playbackStateActions";
 import { ActionType } from "../../actions/constants/actionTypes";
 
 export default function Remote(props: PropType) {
@@ -37,7 +37,7 @@ export default function Remote(props: PropType) {
 									</Button>
 									{
 										props.nextAvailable && 
-										<Button color="primary" className="m-2" disabled={props.actionInProcess}>
+										<Button color="primary" className="m-2" disabled={props.actionInProcess} onClick={() => skipNext(props.dispatch, props.device.id)}>
 											<FontAwesomeIcon icon={faForwardFast} />
 										</Button>
 									}

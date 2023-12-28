@@ -1,4 +1,4 @@
-import { ACTION_IN_PROCESS, ActionType, PLAYBACK_PAUSE_FAILURE, PLAYBACK_PAUSE_SUCCESSFULL, PLAYBACK_RESUME_FAILURE, PLAYBACK_RESUME_SUCCESSFULL, PLAYBACK_STATE_UPDATE } from "../actions/constants/actionTypes";
+import { ACTION_IN_PROCESS, ActionType, PLAYBACK_PAUSE_FAILURE, PLAYBACK_PAUSE_SUCCESSFULL, PLAYBACK_RESUME_FAILURE, PLAYBACK_RESUME_SUCCESSFULL, PLAYBACK_SKIP_NEXT_FAILURE, PLAYBACK_SKIP_NEXT_SUCCESSFULL, PLAYBACK_STATE_UPDATE } from "../actions/constants/actionTypes";
 import { SpotifyStateType } from "../components/Home";
 import { NO_PLAYBACK_ERROR } from "../constants/errorMessages";
 import { formatDateTo12Hour } from "../utils/genericUtils";
@@ -22,6 +22,17 @@ export default function playbackStateReducer(state: SpotifyStateType, action: Ac
             } as SpotifyStateType;
         case PLAYBACK_RESUME_FAILURE:
             return getStateForError(state, action.payload.response.status, true);
+        case PLAYBACK_SKIP_NEXT_SUCCESSFULL:
+            return {
+                ...state,
+                actionInProcess: false,
+                track: state.queue[0],
+                timestamp: formatDateTo12Hour(new Date()),
+                playing: true,
+                queue: action.payload.queue
+            }
+        case PLAYBACK_SKIP_NEXT_FAILURE:
+            return getStateForError(state, action.payload.response.status, state.playing);
         case PLAYBACK_STATE_UPDATE:
             return {
                 ...((action.payload && action.payload.data ? JSON.parse(action.payload.data) : {}) as SpotifyStateType),
