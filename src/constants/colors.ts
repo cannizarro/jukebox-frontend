@@ -1,4 +1,4 @@
-import colorsString from "../../scss/_colors.scss?inline";
+import colorsString from "../scss/_colors.scss?inline";
 
 export const colors = convertStringToObject();
 

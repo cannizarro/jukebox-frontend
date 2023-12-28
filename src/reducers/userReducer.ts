@@ -9,10 +9,7 @@ import {
 	USER_REGISTRATION_SUCCESSFULL,
 } from "../actions/constants/actionTypes";
 
-export default function userContextReducer(
-	state: UserType,
-	action: ActionType,
-): UserType {
+export default function userContextReducer(state: UserType,action: ActionType): UserType {
 	switch (action.type) {
 		case USER_LOGIN_SUCCESSFULL:
 			return {

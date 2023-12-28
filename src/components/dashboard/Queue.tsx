@@ -7,7 +7,7 @@ export default function Queue(props: PropType){
         <ListGroup className="m-2">
             {
                 props.queue.map(track => 
-                    <ListGroupItem className="d-flex">
+                    <ListGroupItem className="d-flex" key={track.id}>
                         <img alt="track image" className="rounded" src={track.image} width={40}/>
                         <div className="d-flex flex-column ms-2">
                             <h6>{track.name}</h6>

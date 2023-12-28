@@ -20,11 +20,10 @@ export default function App() {
 
 			{userContext.user.username ? <Home /> : <Login />}
 
-			<footer className="py-4 bg-dark d-flex text-light justify-content-around">
-				<div className="d-flex flex-column align-items-center">
-					<img src="logo.svg" className="logo" />
-					<small>© {copyrightString}</small>
-				</div>
+			<footer className="py-4 bg-dark d-flex flex-column text-light justify-content-center align-items-center">
+				<img src="logo.svg" className="logo" />
+				<small>© {copyrightString}</small>
+				<small className="fw-light m-2">For more fine grained control or in case of inconsistencies please visit <a href="https://open.spotify.com" target="_blank">Spotify</a> from the navbar at the top.</small>
 			</footer>
 		</>
 	);

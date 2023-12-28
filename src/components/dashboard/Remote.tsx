@@ -5,9 +5,18 @@ import {
 	faPause,
 	faForwardFast,
 } from "@fortawesome/free-solid-svg-icons";
-import { TrackType } from "../Home";
+import { DeviceType, TrackType } from "../Home";
+import { pausePlayback, resumePlayback } from "../../actions/playbackStateActions";
+import { ActionType } from "../../actions/constants/actionTypes";
 
 export default function Remote(props: PropType) {
+
+	function onPauseClick(){
+		props.playing ? 
+			pausePlayback(props.dispatch, props.device.id):
+			resumePlayback(props.dispatch, props.device.id);
+	}
+
 	return (
 		<Card color="secondary" className="p-2 m-2">
 			<CardBody>
@@ -23,12 +32,15 @@ export default function Remote(props: PropType) {
 							{
 								props.track && 
 								<div>
-									<Button color="primary" className="m-2">
+									<Button color="primary" className="m-2" onClick={onPauseClick} disabled={props.actionInProcess}>
 										<FontAwesomeIcon icon={props.playing ? faPause : faPlay} />
 									</Button>
-									<Button color="primary" className="m-2">
-										<FontAwesomeIcon icon={faForwardFast} />
-									</Button>
+									{
+										props.nextAvailable && 
+										<Button color="primary" className="m-2" disabled={props.actionInProcess}>
+											<FontAwesomeIcon icon={faForwardFast} />
+										</Button>
+									}
 								</div>
 							}
 						</CardTitle>
@@ -49,7 +61,10 @@ export default function Remote(props: PropType) {
 
 type PropType = {
 	track: TrackType;
-	playing: boolean;
 	error: string;
-	queueEmpty: boolean;
+	playing: boolean;
+	device: DeviceType;
+	dispatch: React.Dispatch<ActionType>;
+	nextAvailable: boolean;
+	actionInProcess: boolean
 };
