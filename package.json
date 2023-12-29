@@ -20,7 +20,8 @@
 		"react-dom": "^18.2.0",
 		"react-use-websocket": "^4.5.0",
 		"reactstrap": "^9.2.0",
-		"sass": "^1.69.5"
+		"sass": "^1.69.5",
+		"three-dots": "^0.3.2"
 	},
 	"devDependencies": {
 		"@types/react": "^18.2.15",

@@ -1,10 +1,11 @@
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import useWebSocket, { ReadyState, SendMessage } from "react-use-websocket";
 import Remote from "./dashboard/Remote";
 import { useEffect, useReducer, useRef } from "react";
 import Queue from "./dashboard/Queue.tsx";
 import ConnectionInfo from "./dashboard/ConnectionInfo.tsx";
 import playbackStateReducer from "../reducers/playbackStateReducer.ts";
 import { ActionType, PLAYBACK_STATE_UPDATE } from "../actions/constants/actionTypes.ts";
+import { customSendMessage } from "../utils/genericUtils.ts";
 
 export default function Home() {
 	const [spotifyState, dispatch] = useReducer(playbackStateReducer, {} as SpotifyStateType);
@@ -17,8 +18,8 @@ export default function Home() {
 
 	useEffect(() => {
 		if (readyState === ReadyState.OPEN) {
-			sendMessage("state");
-			ref.current = setInterval(() => sendMessage("state"), 30000);
+			customSendMessage(sendMessage, dispatch);
+			ref.current = setInterval(() => customSendMessage(sendMessage, dispatch), 60000);
 		} else {
 			customClearInterval(ref);
 		}
@@ -27,7 +28,8 @@ export default function Home() {
 
 	return (
 		<div className="activity d-flex flex-column">
-			<Remote {...spotifyState} {...{dispatch, nextAvailable: isPopulated(spotifyState.queue)}}/>
+			{spotifyState.loading && <div className="dot-pulse ms-auto me-auto my-4"/>}
+			<Remote {...spotifyState} {...{dispatch, sendMessage, nextAvailable: isPopulated(spotifyState.queue)}}/>
 			{isPopulated(spotifyState.queue) && <Queue {...spotifyState}/>}
 			<ConnectionInfo {...spotifyState} readyState={readyState}/>
 		</div>
@@ -51,6 +53,8 @@ export type SpotifyStateType = {
 	error: string;
 	playing: boolean;
 	actionInProcess: boolean;
+	sendMessage: SendMessage;
+	loading: boolean;
 };
 
 export type TrackType = {

@@ -1,4 +1,10 @@
 @use "scss/colors";
+@use 'three-dots' with (
+  $dot-width: 10px,
+  $dot-height: 10px,
+  $dot-color: colors.$primary,
+);
+
 
 $theme-colors: (
 	"primary": colors.$primary,

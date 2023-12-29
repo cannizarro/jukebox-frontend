@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../providers/UserContextProvider";
-import { Button, PopoverBody, Spinner, UncontrolledPopover } from "reactstrap";
+import { Button, PopoverBody, UncontrolledPopover } from "reactstrap";
 import { setUserLoading } from "../actions/userActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
@@ -9,21 +9,20 @@ export default function Login(): React.JSX.Element {
 	const userContext = useContext(UserContext);
 	return (
 		<div className="d-flex flex-column justify-content-center align-items-center activity">
-			<Button
-				color="primary"
-				disabled={userContext.user.isLoading}
-				className="mt-auto mb-auto"
-				href="http://localhost:8080/jukebox/public/login"
-				onClick={() => setUserLoading(userContext.dispatch)}
-			>
-				{userContext.user.isLoading ?
-					<Spinner />
-				:   <>
+			{
+				userContext.user.isLoading ?
+					<div className="dot-pulse m-auto"/> :	
+					<Button
+						color="primary"
+						className="m-auto"
+						href="http://localhost:8080/jukebox/public/login"
+						onClick={() => setUserLoading(userContext.dispatch)}
+					>
 						<FontAwesomeIcon icon={faSpotify} className="me-2"/>
 						Login with spotify
-					</>
-				}
-			</Button>
+					</Button>
+
+			}
 			<Button
 				id="login-message"
 				outline
