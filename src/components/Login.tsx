@@ -5,24 +5,25 @@ import { setUserLoading } from "../actions/userActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
 
-export default function Login(): React.JSX.Element {
+export default function Login() {
 	const userContext = useContext(UserContext);
 	return (
-		<div className="d-flex flex-column justify-content-center align-items-center activity">
-			{
-				userContext.user.isLoading ?
-					<div className="dot-pulse m-auto"/> :	
-					<Button
-						color="primary"
-						className="m-auto"
-						href="http://localhost:8080/jukebox/public/login"
-						onClick={() => setUserLoading(userContext.dispatch)}
-					>
-						<FontAwesomeIcon icon={faSpotify} className="me-2"/>
-						Login with spotify
-					</Button>
-
-			}
+		<div
+			className="d-flex flex-column justify-content-center align-items-center activity"
+		>
+			{userContext.user.isLoading ? (
+				<div className="dot-pulse m-auto" />
+			) : (
+				<Button
+					color="primary"
+					className="m-auto"
+					href="http://localhost:8080/jukebox/public/login"
+					onClick={() => setUserLoading(userContext.dispatch)}
+				>
+					<FontAwesomeIcon icon={faSpotify} className="me-2" />
+					Login with spotify
+				</Button>
+			)}
 			<Button
 				id="login-message"
 				outline

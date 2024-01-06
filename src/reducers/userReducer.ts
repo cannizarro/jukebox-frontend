@@ -1,5 +1,9 @@
 import {
 	ActionType,
+	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
+	RESTAURANT_UPDATE_FAILURE,
+	RESTAURANT_UPDATE_SUCCESSFUL,
+	SET_USER_RESTAURANT,
 	USER_LOADING,
 	USER_LOGIN_FAILURE,
 	USER_LOGIN_SUCCESSFULL,
@@ -9,7 +13,10 @@ import {
 	USER_REGISTRATION_SUCCESSFULL,
 } from "../actions/constants/actionTypes";
 
-export default function userContextReducer(state: UserType,action: ActionType): UserType {
+export default function userContextReducer(
+	state: UserType,
+	action: ActionType,
+): UserType {
 	switch (action.type) {
 		case USER_LOGIN_SUCCESSFULL:
 			return {
@@ -34,6 +41,26 @@ export default function userContextReducer(state: UserType,action: ActionType): 
 				isLoading: true,
 				registered: state.registered,
 			} as UserType;
+		case RESTAURANT_UPDATE_SUCCESSFUL:
+			return {
+				...state,
+				restaurantName: action.payload,
+			} as UserType;
+		case RESTAURANT_UPDATE_FAILURE:
+			return {
+				...state,
+				error: action.payload,
+			} as UserType;
+		case CLEAR_RESTAURANT_NAME_INPUT_ERROR:
+			return {
+				...state,
+				error: "",
+			} as UserType;
+		case SET_USER_RESTAURANT:
+			return {
+				...state,
+				restaurantName: action.payload,
+			} as UserType;
 		default:
 			return state;
 	}
@@ -47,4 +74,6 @@ export type UserType = {
 	roles: Array<string>;
 	registered: boolean;
 	isLoading: boolean;
+	restaurantName: string;
+	error: string;
 };

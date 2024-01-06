@@ -1,6 +1,10 @@
+import React from "react";
 import { invokeRestApi } from "../api/axiosHelper";
 import {
 	ActionType,
+	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
+	RESTAURANT_UPDATE_FAILURE,
+	RESTAURANT_UPDATE_SUCCESSFUL,
 	USER_LOADING,
 	USER_LOGIN_FAILURE,
 	USER_LOGIN_SUCCESSFULL,
@@ -53,4 +57,40 @@ export function logoutUser(dispatch: React.Dispatch<ActionType>) {
 
 export function setUserLoading(dispatch: React.Dispatch<ActionType>) {
 	dispatch({ type: USER_LOADING } as ActionType);
+}
+
+export function setRestaurantName(
+	dispatch: React.Dispatch<ActionType>,
+	restaurantName: string | null | undefined,
+) {
+	if (!restaurantName) {
+		dispatch({
+			type: RESTAURANT_UPDATE_FAILURE,
+			payload: "Input is not valid",
+		});
+		return;
+	}
+
+	invokeRestApi(
+		"put",
+		"",
+		"",
+		"/admin/updateRestaurant",
+		{ restaurantName },
+		null,
+		dispatch,
+	)
+		.then(() =>
+			dispatch({
+				type: RESTAURANT_UPDATE_SUCCESSFUL,
+				payload: restaurantName,
+			}),
+		)
+		.catch((val) =>
+			dispatch({ type: RESTAURANT_UPDATE_FAILURE, payload: val.message }),
+		);
+}
+
+export function dismissToast(dispatch: React.Dispatch<ActionType>) {
+	dispatch({ type: CLEAR_RESTAURANT_NAME_INPUT_ERROR, payload: "" });
 }

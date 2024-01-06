@@ -1,0 +1,3 @@
+export const APP_NAME = "Baajaa";
+export const ACTIVITY_PADDING_TOP_WITH_RESTAURANT = "84px";
+export const ACTIVITY_PADDING_TOP_WITHOUT_RESTAURANT = "74px";

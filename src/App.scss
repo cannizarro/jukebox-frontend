@@ -1,10 +1,9 @@
 @use "scss/colors";
-@use 'three-dots' with (
-  $dot-width: 10px,
-  $dot-height: 10px,
-  $dot-color: colors.$primary,
+@use "three-dots" with (
+	$dot-width: 10px,
+	$dot-height: 10px,
+	$dot-color: colors.$primary
 );
-
 
 $theme-colors: (
 	"primary": colors.$primary,
@@ -17,6 +16,8 @@ $theme-colors: (
 	"dark": colors.$dark,
 );
 
+$small-font-size: 0.7em;
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 %full-screen {
@@ -25,7 +26,6 @@ $theme-colors: (
 
 .activity {
 	@extend %full-screen;
-	padding-top: 64px;
 }
 
 img.logo {

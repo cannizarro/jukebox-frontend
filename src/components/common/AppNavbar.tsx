@@ -9,18 +9,29 @@ import {
 	NavItem,
 	NavLink,
 } from "reactstrap";
-import { APP_NAME } from "./constants";
-import { ActionType } from "../../actions/constants/actionTypes";
 import { logoutUser } from "../../actions/userActions";
+import { UserContextType } from "../../providers/UserContextProvider";
+import { APP_NAME } from "../../constants/constants";
 
 export default function AppNavbar(props: PropsType) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<Navbar color="dark" dark expand="md" fixed="top">
-			<NavbarBrand href="/">
+			<NavbarBrand
+				href={props.isLoggedIn ? "/" : ""}
+				className="d-flex align-items-center"
+			>
 				<img src="logo.svg" className="logo" />
-				{APP_NAME}
+				<span className="d-flex flex-column ms-2">
+					{APP_NAME}
+					{props.userContext.user.restaurantName && (
+						<small className="text-secondary">
+							<small className="fw-small">for </small>
+							{props.userContext.user.restaurantName}
+						</small>
+					)}
+				</span>
 			</NavbarBrand>
 			{props.isLoggedIn && (
 				<>
@@ -49,7 +60,9 @@ export default function AppNavbar(props: PropsType) {
 							</NavItem>
 						</Nav>
 						<Button
-							onClick={() => logoutUser(props.dispatch)}
+							onClick={() =>
+								logoutUser(props.userContext.dispatch)
+							}
 							className="mr-auto"
 						>
 							Logout
@@ -62,6 +75,6 @@ export default function AppNavbar(props: PropsType) {
 }
 
 type PropsType = {
-	dispatch: React.Dispatch<ActionType>;
+	userContext: UserContextType;
 	isLoggedIn: boolean;
 };
