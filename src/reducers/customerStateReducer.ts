@@ -5,6 +5,7 @@ import {
 	LOADING,
 } from "../actions/constants/actionTypes";
 import { TrackType } from "../components/Home";
+import { NO_USER_FOUND_FOR_CUSTOMER } from "../constants/errorMessages";
 
 export default function customerStateReducer(
 	state: CustomerStateType,
@@ -18,8 +19,8 @@ export default function customerStateReducer(
 			} as CustomerStateType;
 		case CUSTOMER_STATE_LOAD_FAILURE:
 			return {
-				error: action.payload.message,
 				loading: false,
+				error: action.payload.response.status === 410 ? NO_USER_FOUND_FOR_CUSTOMER : action.payload.message
 			} as CustomerStateType;
 		case LOADING:
 			return {
@@ -38,4 +39,5 @@ export type CustomerStateType = {
 	playing: boolean;
 	loading: boolean;
 	restaurantName: string;
+	secondsQueued: number;
 };

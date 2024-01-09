@@ -1,6 +1,7 @@
 import {
 	ActionType,
 	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
+	DISABLE_INPUT_BUTTON,
 	RESTAURANT_UPDATE_FAILURE,
 	RESTAURANT_UPDATE_SUCCESSFUL,
 	SET_USER_RESTAURANT,
@@ -45,11 +46,13 @@ export default function userContextReducer(
 			return {
 				...state,
 				restaurantName: action.payload,
+				restaurantInputDisabled: true
 			} as UserType;
 		case RESTAURANT_UPDATE_FAILURE:
 			return {
 				...state,
 				error: action.payload,
+				restaurantInputDisabled: true
 			} as UserType;
 		case CLEAR_RESTAURANT_NAME_INPUT_ERROR:
 			return {
@@ -61,6 +64,11 @@ export default function userContextReducer(
 				...state,
 				restaurantName: action.payload,
 			} as UserType;
+		case DISABLE_INPUT_BUTTON:
+			return {
+				...state,
+				restaurantInputDisabled: false
+			};
 		default:
 			return state;
 	}
@@ -75,5 +83,6 @@ export type UserType = {
 	registered: boolean;
 	isLoading: boolean;
 	restaurantName: string;
+	restaurantInputDisabled: boolean;
 	error: string;
 };

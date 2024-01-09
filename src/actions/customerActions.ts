@@ -12,7 +12,6 @@ export function loadCustomerData(
 	dispatch: React.Dispatch<ActionType>,
 	username: string,
 	userDispatch: React.Dispatch<ActionType>,
-	isRestaurantNameAvailable: boolean,
 ) {
 	dispatch({ type: LOADING } as ActionType);
 	invokeRestApi(
@@ -25,7 +24,6 @@ export function loadCustomerData(
 		dispatch,
 	).then(
 		(val) =>
-			!isRestaurantNameAvailable &&
 			val.restaurantName &&
 			userDispatch({
 				type: SET_USER_RESTAURANT,

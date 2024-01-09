@@ -26,8 +26,7 @@ export default function App() {
 				<CustomerHome
 					{...{
 						username: window.location.pathname.substring(1),
-						userDispatch: userContext.dispatch,
-						isRestaurantNameAvailable: paddingTop === ACTIVITY_PADDING_TOP_WITH_RESTAURANT
+						userDispatch: userContext.dispatch
 					}}
 				/>
 			) : isLoggedIn ? (

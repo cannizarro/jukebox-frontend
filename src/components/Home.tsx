@@ -1,6 +1,6 @@
 import useWebSocket, { ReadyState, SendMessage } from "react-use-websocket";
 import { useContext, useEffect, useReducer, useRef } from "react";
-import Queue from "./dashboard/Queue.tsx";
+import Queue from "./common/Queue.tsx";
 import ConnectionInfo from "./dashboard/ConnectionInfo.tsx";
 import playbackStateReducer from "../reducers/playbackStateReducer.ts";
 import {
@@ -80,7 +80,7 @@ export default function Home() {
 						placeholder={RESTAURANT_NAME_PLACEHOLDER}
 						id="restaurant_name"
 					/>
-					<Button color="primary" onClick={handleUpdateClick}>
+					<Button color="primary" onClick={handleUpdateClick} disabled={userContext.user.restaurantInputDisabled}>
 						Update
 					</Button>
 				</InputGroup>
@@ -96,7 +96,7 @@ export default function Home() {
 					nextAvailable: isPopulated(spotifyState.queue),
 				}}
 			/>
-			{isPopulated(spotifyState.queue) && <Queue {...spotifyState} />}
+			{isPopulated(spotifyState.queue) && <Queue {...spotifyState} secondsQueued={null} username={null}/>}
 			<ConnectionInfo {...spotifyState} readyState={readyState} />
 		</div>
 	);

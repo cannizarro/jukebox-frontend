@@ -3,6 +3,7 @@ import { invokeRestApi } from "../api/axiosHelper";
 import {
 	ActionType,
 	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
+	DISABLE_INPUT_BUTTON,
 	RESTAURANT_UPDATE_FAILURE,
 	RESTAURANT_UPDATE_SUCCESSFUL,
 	USER_LOADING,
@@ -63,6 +64,10 @@ export function setRestaurantName(
 	dispatch: React.Dispatch<ActionType>,
 	restaurantName: string | null | undefined,
 ) {
+	dispatch({
+		type: DISABLE_INPUT_BUTTON
+	} as ActionType);
+	
 	if (!restaurantName) {
 		dispatch({
 			type: RESTAURANT_UPDATE_FAILURE,
