@@ -11,7 +11,6 @@ import {
 	USER_LOGOUT_FAILURE,
 	USER_LOGOUT_SUCCESSFUL,
 	USER_REGISTRATION_FAILURE,
-	USER_REGISTRATION_SUCCESSFULL,
 } from "../actions/constants/actionTypes";
 
 export default function userContextReducer(
@@ -24,12 +23,6 @@ export default function userContextReducer(
 				...state,
 				...action.payload,
 			};
-		case USER_REGISTRATION_SUCCESSFULL:
-			// replacing the current url containing query string with hostname
-			window.location.replace(window.location.href.split("?")[0]);
-			return {
-				registered: true,
-			} as UserType;
 		case USER_LOGIN_FAILURE:
 		case USER_REGISTRATION_FAILURE:
 			return {} as UserType;

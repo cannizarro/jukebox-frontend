@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { isPopulated } from "../utils/genericUtils";
 import Player from "./dashboard/Player";
 import Queue from "./common/Queue";
@@ -6,23 +6,26 @@ import customerStateReducer, {
 	CustomerStateType,
 } from "../reducers/customerStateReducer";
 import { loadCustomerData } from "../actions/customerActions";
-import { ActionType } from "../actions/constants/actionTypes";
 import Search from "./customer/Search";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../providers/UserContextProvider";
 
-export default function CustomerHome(props: PropsType) {
+export default function CustomerHome() {
 	const [customerState, dispatch] = useReducer(
 		customerStateReducer,
 		{} as CustomerStateType,
 	);
+	const params = useParams() as { username: string };
+	const userDispatch = useContext(UserContext).dispatch;
 
 	useEffect(
 		() =>
 			loadCustomerData(
 				dispatch,
-				props.username,
-				props.userDispatch,
+				params.username,
+				userDispatch,
 			),
-		[props.username, props.userDispatch],
+		[params.username, userDispatch],
 	);
 
 	return (
@@ -32,7 +35,7 @@ export default function CustomerHome(props: PropsType) {
 			{customerState.loading ?
 				<div className="dot-pulse ms-auto me-auto my-4" /> :
 				<>
-				<Search username={props.username} secondsQueued={customerState.secondsQueued}/>
+				<Search username={params.username} secondsQueued={customerState.secondsQueued}/>
 				<Player
 					{...{
 						...customerState,
@@ -50,7 +53,3 @@ export default function CustomerHome(props: PropsType) {
 	);
 }
 
-type PropsType = {
-	username: string;
-	userDispatch: React.Dispatch<ActionType>;
-};

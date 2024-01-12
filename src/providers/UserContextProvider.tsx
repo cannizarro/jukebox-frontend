@@ -1,7 +1,6 @@
-import { ReactNode, createContext, useEffect, useReducer } from "react";
+import { ReactNode, createContext, useReducer } from "react";
 import userContextReducer, { UserType } from "../reducers/userReducer";
 import { ActionType } from "../actions/constants/actionTypes";
-import { loginUser, registerUser } from "../actions/userActions";
 
 export const UserContext = createContext<UserContextType>(
 	{} as UserContextType,
@@ -9,15 +8,6 @@ export const UserContext = createContext<UserContextType>(
 
 export function UserContextProvider({ children }: PropsType) {
 	const [user, dispatch] = useReducer(userContextReducer, {} as UserType);
-
-	useEffect(() => {
-		loginUser(dispatch).catch(() => {
-			const params = new URLSearchParams(window.location.search);
-			if (params.get("code") && params.get("state")) {
-				registerUser(dispatch, params);
-			}
-		});
-	}, [dispatch, user.registered]);
 
 	return (
 		<UserContext.Provider value={{ user, dispatch }}>

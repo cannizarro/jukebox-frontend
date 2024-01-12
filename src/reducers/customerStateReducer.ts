@@ -40,4 +40,5 @@ export type CustomerStateType = {
 	loading: boolean;
 	restaurantName: string;
 	secondsQueued: number;
+	username: string;
 };

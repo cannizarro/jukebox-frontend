@@ -12,7 +12,6 @@ import {
 	USER_LOGOUT_FAILURE,
 	USER_LOGOUT_SUCCESSFUL,
 	USER_REGISTRATION_FAILURE,
-	USER_REGISTRATION_SUCCESSFULL,
 } from "./constants/actionTypes";
 
 export function registerUser(
@@ -20,15 +19,15 @@ export function registerUser(
 	params: object,
 ) {
 	setUserLoading(dispatch);
-	invokeRestApi(
+	return invokeRestApi(
 		"get",
-		USER_REGISTRATION_SUCCESSFULL,
+		"",
 		USER_REGISTRATION_FAILURE,
 		"/public/registerUser",
 		params,
 		null,
 		dispatch,
-	);
+	).then(() => true);
 }
 
 export function loginUser(dispatch: React.Dispatch<ActionType>) {
