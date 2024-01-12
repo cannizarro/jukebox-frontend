@@ -36,18 +36,15 @@ export default function Search(props: PropsType){
 				</ToastHeader>
 				<ToastBody>{searchState.error}</ToastBody>
 			</Toast>
-            {
-                props.secondsQueued &&
-                <InputGroup className="px-2 pb-2">
-                    <Input
-                        placeholder={CUSTOMER_SEARCH_PLACEHOLDER(Math.ceil(props.secondsQueued/60))}
-                        id="restaurant_name"
-                    />
-                    <Button color="primary" onClick={handleSearch} disabled={searchState.loading}>
-                        Search
-                    </Button>
-                </InputGroup>
-            }
+            <InputGroup className="px-2 pb-2">
+                <Input
+                    placeholder={CUSTOMER_SEARCH_PLACEHOLDER(Math.ceil(props.secondsQueued/60))}
+                    id="restaurant_name"
+                />
+                <Button color="primary" onClick={handleSearch} disabled={searchState.loading}>
+                    Search
+                </Button>
+            </InputGroup>
             {searchState.loading && <div className="dot-pulse ms-auto me-auto my-4" />}
             {isPopulated(searchState.tracks) && <Queue queue={searchState.tracks} secondsQueued={searchState.secondsQueued} username={props.username}/>}
         </>

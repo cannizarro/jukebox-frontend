@@ -1,39 +1,62 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
 	Button,
 	Collapse,
 	Nav,
 	Navbar,
 	NavbarBrand,
-	NavbarToggler,
-	NavItem,
-	NavLink,
+	NavbarToggler
 } from "reactstrap";
 import { logoutUser } from "../../actions/userActions";
-import { UserContextType } from "../../providers/UserContextProvider";
+import { UserContext } from "../../providers/UserContextProvider";
 import { APP_NAME } from "../../constants/constants";
+import CustomLink, { PropType as LinkPropType } from "./CustomLink";
 
-export default function AppNavbar(props: PropsType) {
+export default function AppNavbar() {
+	const userContext = useContext(UserContext);
 	const [isOpen, setIsOpen] = useState(false);
+
+	const navs: Array<LinkPropType> = [
+		{
+			children: <>Dashboard</>,
+			to: "/",
+			target: "_self"
+		},
+		{
+			children: <>Transactions</>,
+			to: "/transaction",
+			target: "_self"
+		},
+		{
+			children: <>Jukebox</>,
+			to: "/"+userContext.user.username,
+			target: "_blank"
+		},
+		{
+			children: <>Spotify</>,
+			to: "https://open.spotify.com",
+			target: "_blank"
+		},
+	]
 
 	return (
 		<Navbar color="dark" dark expand="md" fixed="top">
 			<NavbarBrand
-				href={props.isLoggedIn ? "/" : ""}
+				href={userContext.user.username ? "/" : ""}
 				className="d-flex align-items-center"
 			>
 				<img src="logo.svg" className="logo" />
 				<span className="d-flex flex-column ms-2">
 					{APP_NAME}
-					{props.userContext.user.restaurantName && (
+					{userContext.user.restaurantName && (
 						<small className="text-secondary">
 							<small className="fw-small">for </small>
-							{props.userContext.user.restaurantName}
+							{userContext.user.restaurantName}
 						</small>
 					)}
 				</span>
 			</NavbarBrand>
-			{props.isLoggedIn && (
+			{userContext.user.username && (
 				<>
 					<NavbarToggler
 						onClick={() => {
@@ -42,26 +65,11 @@ export default function AppNavbar(props: PropsType) {
 					/>
 					<Collapse isOpen={isOpen} navbar>
 						<Nav style={{ width: "100%" }} navbar>
-							<NavItem className="mx-2">
-								<NavLink
-									href="https://open.spotify.com"
-									target="_blank"
-								>
-									Spotify
-								</NavLink>
-							</NavItem>
-							<NavItem className="mx-2">
-								<NavLink
-									href="https://open.spotify.com"
-									target="_blank"
-								>
-									Transactions
-								</NavLink>
-							</NavItem>
+							{navs.map(nav => <CustomLink {...nav}/>)}
 						</Nav>
 						<Button
 							onClick={() =>
-								logoutUser(props.userContext.dispatch)
+								logoutUser(userContext.dispatch)
 							}
 							className="mr-auto"
 						>
@@ -73,8 +81,3 @@ export default function AppNavbar(props: PropsType) {
 		</Navbar>
 	);
 }
-
-type PropsType = {
-	userContext: UserContextType;
-	isLoggedIn: boolean;
-};

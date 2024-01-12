@@ -20,7 +20,7 @@ export default function customerStateReducer(
 		case CUSTOMER_STATE_LOAD_FAILURE:
 			return {
 				loading: false,
-				error: action.payload.response.status === 410 ? NO_USER_FOUND_FOR_CUSTOMER : action.payload.message
+				error: action.payload?.response?.status === 410 ? NO_USER_FOUND_FOR_CUSTOMER : action.payload.message
 			} as CustomerStateType;
 		case LOADING:
 			return {

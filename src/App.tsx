@@ -12,14 +12,13 @@ export default function App() {
 	const currentYear = new Date().getFullYear();
 	const copyrightString =
 		currentYear === 2023 ? "2023" : "2023-" + currentYear;
-	const isLoggedIn = Boolean(userContext.user.username);
 	const paddingTop = userContext.user.restaurantName
 		? ACTIVITY_PADDING_TOP_WITH_RESTAURANT
 		: ACTIVITY_PADDING_TOP_WITHOUT_RESTAURANT;
 
 	return (
 		<div style={{ paddingTop: paddingTop }}>
-			<AppNavbar {...{ userContext, isLoggedIn }} />
+			<AppNavbar />
 			<Outlet/>
 			<footer className="py-4 bg-dark d-flex flex-column text-light justify-content-center align-items-center">
 				<img src="logo.svg" className="logo" />

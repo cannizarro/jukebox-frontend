@@ -35,7 +35,7 @@ export default function CustomerHome() {
 			{customerState.loading ?
 				<div className="dot-pulse ms-auto me-auto my-4" /> :
 				<>
-				<Search username={params.username} secondsQueued={customerState.secondsQueued}/>
+				{customerState.playing && <Search username={params.username} secondsQueued={customerState.secondsQueued}/>}
 				<Player
 					{...{
 						...customerState,
