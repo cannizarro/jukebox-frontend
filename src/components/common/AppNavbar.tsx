@@ -24,12 +24,12 @@ export default function AppNavbar() {
 		},
 		{
 			children: <>Transactions</>,
-			to: "/transaction",
+			to: "/transactions",
 			target: "_self"
 		},
 		{
 			children: <>Jukebox</>,
-			to: "/"+userContext.user.username,
+			to: "/" + userContext.user.username,
 			target: "_blank"
 		},
 		{
@@ -65,7 +65,7 @@ export default function AppNavbar() {
 					/>
 					<Collapse isOpen={isOpen} navbar>
 						<Nav style={{ width: "100%" }} navbar>
-							{navs.map(nav => <CustomLink {...nav}/>)}
+							{navs.map(nav => <CustomLink key={nav.to} {...nav}/>)}
 						</Nav>
 						<Button
 							onClick={() =>

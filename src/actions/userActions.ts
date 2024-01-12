@@ -27,7 +27,7 @@ export function registerUser(
 		params,
 		null,
 		dispatch,
-	).then(() => true);
+	);
 }
 
 export function loginUser(dispatch: React.Dispatch<ActionType>) {

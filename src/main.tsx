@@ -7,6 +7,7 @@ import Home from "./components/Home.tsx";
 import Login from "./components/Login.tsx";
 import CustomerHome from "./components/CustomerHome.tsx";
 import RequireAuth from "./providers/RequireAuth.tsx";
+import Transactions from "./components/customer/Transactions.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<BrowserRouter>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 					}/>
 					<Route path="/login" element={<Login/>}/>
 					<Route path="/:username" element={<CustomerHome/>}/>
+					<Route path="/transactions" element={<RequireAuth><Transactions/></RequireAuth>}/>
 				</Route>
 			</Routes>
 		</UserContextProvider>
