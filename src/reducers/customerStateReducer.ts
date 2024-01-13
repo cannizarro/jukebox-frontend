@@ -4,7 +4,7 @@ import {
 	CUSTOMER_DATA_LOAD_SUCCESSFULL as CUSTOMER_STATE_LOAD_SUCCESSFULL,
 	LOADING,
 } from "../actions/constants/actionTypes";
-import { TrackType } from "../components/Home";
+import { TrackType } from "../components/dashboard/Home";
 import { NO_USER_FOUND_FOR_CUSTOMER } from "../constants/errorMessages";
 
 export default function customerStateReducer(

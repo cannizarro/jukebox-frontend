@@ -21,7 +21,7 @@ export default function Login() {
 	}, [userContext.dispatch, searchParams, setSearchParams]);
 
 	return userContext.user.username ?
-		<Navigate to={location.state?.from ? location.state.from : "/"} replace /> : 
+		<Navigate to={location.state?.from ? location.state.from : "/"} replace/> : 
 		(
 			<div
 				className="d-flex flex-column justify-content-center align-items-center activity"

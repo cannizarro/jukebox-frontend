@@ -1,14 +1,14 @@
 import useWebSocket, { ReadyState, SendMessage } from "react-use-websocket";
 import { useContext, useEffect, useReducer, useRef } from "react";
-import Queue from "./common/Queue.tsx";
-import ConnectionInfo from "./dashboard/ConnectionInfo.tsx";
-import playbackStateReducer from "../reducers/playbackStateReducer.ts";
+import Queue from "../common/Queue.tsx";
+import ConnectionInfo from "./ConnectionInfo.tsx";
+import playbackStateReducer from "../../reducers/playbackStateReducer.ts";
 import {
 	ActionType,
 	PLAYBACK_STATE_UPDATE,
-} from "../actions/constants/actionTypes.ts";
-import { customSendMessage, isPopulated } from "../utils/genericUtils.ts";
-import { UserContext } from "../providers/UserContextProvider.tsx";
+} from "../../actions/constants/actionTypes.ts";
+import { customSendMessage, isPopulated } from "../../utils/genericUtils.ts";
+import { UserContext } from "../../providers/UserContextProvider.tsx";
 import {
 	Button,
 	Input,
@@ -17,9 +17,9 @@ import {
 	ToastBody,
 	ToastHeader,
 } from "reactstrap";
-import { RESTAURANT_NAME_PLACEHOLDER } from "../constants/messageConstants.ts";
-import { dismissToast, setRestaurantName } from "../actions/userActions.ts";
-import Player from "./dashboard/Player.tsx";
+import { RESTAURANT_NAME_PLACEHOLDER } from "../../constants/messageConstants.ts";
+import { dismissToast, setRestaurantName } from "../../actions/userActions.ts";
+import Player from "./Player.tsx";
 
 export default function Home() {
 	const userContext = useContext(UserContext);

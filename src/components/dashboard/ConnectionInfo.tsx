@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReadyState } from "react-use-websocket";
 import { formatStringTo12HourDate } from "../../utils/genericUtils.ts";
 import { colors } from "../../constants/colors.ts";
-import { DeviceType } from "../Home.tsx";
+import { DeviceType } from "./Home.tsx";
 
 export default function ConnectionInfo(props: PropType) {
 	return (

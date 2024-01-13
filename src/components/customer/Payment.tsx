@@ -1,5 +1,5 @@
 import { Alert, Button, Card, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { TrackType } from "../Home";
+import { TrackType } from "../dashboard/Home";
 import { MouseEventHandler, SyntheticEvent, useReducer } from "react";
 import paymentReducer, { PaymentStateType } from "../../reducers/paymentReducer";
 import { pay } from "../../actions/paymentActions";

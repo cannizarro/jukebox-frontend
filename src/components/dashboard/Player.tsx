@@ -1,8 +1,9 @@
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { DeviceType, TrackType } from "../Home";
+import { DeviceType, TrackType } from "../dashboard/Home";
 import { ActionType } from "../../actions/constants/actionTypes";
 import { SendMessage } from "react-use-websocket";
 import Remote from "./Remote";
+import { Fade } from "react-awesome-reveal";
 
 export default function Player(props: PlayerPropType) {
 	return (
@@ -23,7 +24,7 @@ export default function Player(props: PlayerPropType) {
 								/>
 							)}
 							<span className="me-auto ms-2">
-								{props.track ? props.track.name : props.error}
+								<Fade key={props.track.id}>{props.track ? props.track.name : props.error}</Fade>
 							</span>
 							{props.track &&
 								props.dispatch &&
@@ -38,14 +39,14 @@ export default function Player(props: PlayerPropType) {
 								)}
 						</CardTitle>
 						{props.track && (
-							<>
+							<Fade key={props.track.id}>
 								<CardSubtitle tag="h6">
 									{props.track.album}
 								</CardSubtitle>
 								<CardText>
 									{props.track.artists.join(", ")}
 								</CardText>
-							</>
+							</Fade>
 						)}
 					</>
 				) : (

@@ -6,7 +6,7 @@ import {
 	faForwardFast,
 	faFastBackward,
 } from "@fortawesome/free-solid-svg-icons";
-import { DeviceType } from "../Home";
+import { DeviceType } from "./Home";
 import {
 	pausePlayback,
 	resumePlayback,

@@ -12,7 +12,7 @@ import {
 	PLAYBACK_SKIP_PREVIOUS_SUCCESSFULL,
 	PLAYBACK_STATE_UPDATE,
 } from "../actions/constants/actionTypes";
-import { SpotifyStateType } from "../components/Home";
+import { SpotifyStateType } from "../components/dashboard/Home";
 import { NO_PLAYBACK_ERROR } from "../constants/errorMessages";
 import { formatDateTo12Hour } from "../utils/genericUtils";
 

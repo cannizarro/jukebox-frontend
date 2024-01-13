@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { UserContextProvider } from "./providers/UserContextProvider.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home.tsx";
+import Home from "./components/dashboard/Home.tsx";
 import Login from "./components/Login.tsx";
-import CustomerHome from "./components/CustomerHome.tsx";
+import CustomerHome from "./components/customer/CustomerHome.tsx";
 import RequireAuth from "./providers/RequireAuth.tsx";
 import Transactions from "./components/customer/Transactions.tsx";
 

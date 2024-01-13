@@ -1,3 +1,10 @@
 export default function Transactions(){
-    return (<>hello</>);
+    return (
+        <div
+			className="activity d-flex flex-column"
+		>
+            
+            
+        </div>
+    );
 }

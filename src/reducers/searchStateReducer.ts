@@ -1,5 +1,5 @@
 import { ActionType, CLEAR_SEARCH_ERROR, DISABLE_SEARCH_BUTTON, SEARCH_FAILURE, SEARCH_SUCCESSFULL } from "../actions/constants/actionTypes";
-import { TrackType } from "../components/Home";
+import { TrackType } from "../components/dashboard/Home";
 
 export default function searchStateReducer(state: SearchStateType, action: ActionType): SearchStateType{
     switch(action.type){

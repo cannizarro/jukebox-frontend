@@ -1,14 +1,14 @@
 import { useContext, useEffect, useReducer } from "react";
-import { isPopulated } from "../utils/genericUtils";
-import Player from "./dashboard/Player";
-import Queue from "./common/Queue";
+import { isPopulated } from "../../utils/genericUtils";
+import Player from "../dashboard/Player";
+import Queue from "../common/Queue";
 import customerStateReducer, {
 	CustomerStateType,
-} from "../reducers/customerStateReducer";
-import { loadCustomerData } from "../actions/customerActions";
-import Search from "./customer/Search";
+} from "../../reducers/customerStateReducer";
+import { loadCustomerData } from "../../actions/customerActions";
+import Search from "./Search";
 import { useParams } from "react-router-dom";
-import { UserContext } from "../providers/UserContextProvider";
+import { UserContext } from "../../providers/UserContextProvider";
 
 export default function CustomerHome() {
 	const [customerState, dispatch] = useReducer(
