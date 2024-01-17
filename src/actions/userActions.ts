@@ -3,7 +3,9 @@ import { invokeRestApi } from "../api/axiosHelper";
 import {
 	ActionType,
 	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
-	DISABLE_INPUT_BUTTON,
+	DISABLE_USER_INPUT_BUTTON,
+	ONLINE_SWITCH_FAILURE,
+	ONLINE_SWITCH_SUCCESSFULL,
 	RESTAURANT_UPDATE_FAILURE,
 	RESTAURANT_UPDATE_SUCCESSFUL,
 	USER_LOADING,
@@ -64,37 +66,44 @@ export function setRestaurantName(
 	restaurantName: string | null | undefined,
 ) {
 	dispatch({
-		type: DISABLE_INPUT_BUTTON
+		type: DISABLE_USER_INPUT_BUTTON
 	} as ActionType);
 	
 	if (!restaurantName) {
 		dispatch({
 			type: RESTAURANT_UPDATE_FAILURE,
-			payload: "Input is not valid",
+			payload: {message: "Input is not valid"},
 		});
 		return;
 	}
-
 	invokeRestApi(
 		"put",
-		"",
-		"",
+		RESTAURANT_UPDATE_SUCCESSFUL,
+		RESTAURANT_UPDATE_FAILURE,
 		"/admin/updateRestaurant",
 		{ restaurantName },
 		null,
 		dispatch,
-	)
-		.then(() =>
-			dispatch({
-				type: RESTAURANT_UPDATE_SUCCESSFUL,
-				payload: restaurantName,
-			}),
-		)
-		.catch((val) =>
-			dispatch({ type: RESTAURANT_UPDATE_FAILURE, payload: val.message }),
-		);
+	);
 }
 
 export function dismissToast(dispatch: React.Dispatch<ActionType>) {
 	dispatch({ type: CLEAR_RESTAURANT_NAME_INPUT_ERROR, payload: "" });
+}
+
+export function updateOnline(dispatch: React.Dispatch<ActionType>, online: boolean){
+	
+	dispatch({
+		type: DISABLE_USER_INPUT_BUTTON
+	} as ActionType);
+	
+	invokeRestApi(
+		"put",
+		ONLINE_SWITCH_SUCCESSFULL,
+		ONLINE_SWITCH_FAILURE,
+		"/admin/updateOnline",
+		{ online },
+		null,
+		dispatch
+	)
 }

@@ -11,10 +11,15 @@ import { logoutUser } from "../../actions/userActions";
 import { UserContext } from "../../providers/UserContextProvider";
 import { APP_NAME } from "../../constants/constants";
 import CustomLink, { PropType as LinkPropType } from "./CustomLink";
+import QRCodeComponent from "../dashboard/QRCode";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQrcode } from "@fortawesome/free-solid-svg-icons";
 
 export default function AppNavbar() {
 	const userContext = useContext(UserContext);
 	const [isOpen, setIsOpen] = useState(false);
+	const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
 
 	const navs: Array<LinkPropType> = [
 		{
@@ -33,17 +38,17 @@ export default function AppNavbar() {
 			target: "_blank"
 		},
 		{
-			children: <>Spotify</>,
+			children: <>Spotify ↗</>,
 			to: "https://open.spotify.com",
 			target: "_blank"
-		},
+		}
 	]
 
 	return (
 		<Navbar color="dark" dark expand="md" fixed="top">
 			<NavbarBrand
-				href={userContext.user.username ? "/" : ""}
 				className="d-flex align-items-center"
+				onClick={toggle}
 			>
 				<img src="logo.svg" className="logo" />
 				<span className="d-flex flex-column ms-2">
@@ -68,16 +73,22 @@ export default function AppNavbar() {
 							{navs.map(nav => <CustomLink key={nav.to} {...nav}/>)}
 						</Nav>
 						<Button
+							onClick={toggle}
+							className="ms-auto me-4"
+						>
+							<FontAwesomeIcon icon={faQrcode} />
+						</Button>
+						<Button
 							onClick={() =>
 								logoutUser(userContext.dispatch)
 							}
-							className="mr-auto"
 						>
 							Logout
 						</Button>
 					</Collapse>
 				</>
 			)}
+			<QRCodeComponent modal={modal} toggle={toggle}/>
 		</Navbar>
 	);
 }

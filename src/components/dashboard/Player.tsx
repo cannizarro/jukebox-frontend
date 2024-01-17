@@ -24,7 +24,7 @@ export default function Player(props: PlayerPropType) {
 								/>
 							)}
 							<span className="me-auto ms-2">
-								<Fade key={props.track.id}>{props.track ? props.track.name : props.error}</Fade>
+								<Fade key={props.track?.id}>{props.track ? props.track.name : props.error}</Fade>
 							</span>
 							{props.track &&
 								props.dispatch &&

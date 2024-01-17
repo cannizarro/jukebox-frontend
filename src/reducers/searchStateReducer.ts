@@ -1,5 +1,6 @@
 import { ActionType, CLEAR_SEARCH_ERROR, DISABLE_SEARCH_BUTTON, SEARCH_FAILURE, SEARCH_SUCCESSFULL } from "../actions/constants/actionTypes";
 import { TrackType } from "../components/dashboard/Home";
+import { getCustomerMessageForError } from "./customerStateReducer";
 
 export default function searchStateReducer(state: SearchStateType, action: ActionType): SearchStateType{
     switch(action.type){
@@ -14,7 +15,7 @@ export default function searchStateReducer(state: SearchStateType, action: Actio
         case SEARCH_FAILURE:
             return {
                 ...state,
-                error: action.payload.message,
+                error: getCustomerMessageForError(action),
                 loading: false
             } as SearchStateType;
         case CLEAR_SEARCH_ERROR:

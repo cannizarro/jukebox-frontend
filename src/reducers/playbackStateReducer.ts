@@ -30,7 +30,7 @@ export default function playbackStateReducer(
 		case PLAYBACK_PAUSE_FAILURE:
 			return getStateForError(
 				state,
-				action.payload.response.status,
+				action.payload?.response?.status,
 				false,
 			);
 		case PLAYBACK_RESUME_SUCCESSFULL:
@@ -42,7 +42,7 @@ export default function playbackStateReducer(
 		case PLAYBACK_RESUME_FAILURE:
 			return getStateForError(
 				state,
-				action.payload.response.status,
+				action.payload?.response?.status,
 				true,
 			);
 		case PLAYBACK_SKIP_NEXT_SUCCESSFULL:
@@ -55,7 +55,7 @@ export default function playbackStateReducer(
 		case PLAYBACK_SKIP_PREVIOUS_FAILURE:
 			return getStateForError(
 				state,
-				action.payload.response.status,
+				action.payload?.response?.status,
 				state.playing,
 			);
 		case PLAYBACK_STATE_UPDATE:

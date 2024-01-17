@@ -9,17 +9,12 @@ import {
 } from "../../actions/constants/actionTypes.ts";
 import { customSendMessage, isPopulated } from "../../utils/genericUtils.ts";
 import { UserContext } from "../../providers/UserContextProvider.tsx";
-import {
-	Button,
-	Input,
-	InputGroup,
-	Toast,
-	ToastBody,
-	ToastHeader,
-} from "reactstrap";
 import { RESTAURANT_NAME_PLACEHOLDER } from "../../constants/messageConstants.ts";
-import { dismissToast, setRestaurantName } from "../../actions/userActions.ts";
+import { dismissToast, setRestaurantName, updateOnline } from "../../actions/userActions.ts";
 import Player from "./Player.tsx";
+import CustomToast from "../common/CustomToast.tsx";
+import CustomInput from "../common/CustomInput.tsx";
+import CustomSwitch from "../common/CustomSwitch.tsx";
 
 export default function Home() {
 	const userContext = useContext(UserContext);
@@ -62,32 +57,21 @@ export default function Home() {
 
 	return (
 		<div className="activity d-flex flex-column">
-			<Toast
-				className="fixed-bottom m-4 text-danger"
-				isOpen={Boolean(userContext.user.error)}
-			>
-				<ToastHeader
-					className="text-danger bg-secondary"
-					toggle={() => dismissToast(userContext.dispatch)}
-				>
-					Update Error
-				</ToastHeader>
-				<ToastBody>{userContext.user.error}</ToastBody>
-			</Toast>
-			{!userContext.user.restaurantName && (
-				<InputGroup className="px-2 pb-2">
-					<Input
-						placeholder={RESTAURANT_NAME_PLACEHOLDER}
-						id="restaurant_name"
-					/>
-					<Button color="primary" onClick={handleUpdateClick} disabled={userContext.user.restaurantInputDisabled}>
-						Update
-					</Button>
-				</InputGroup>
-			)}
-			{spotifyState.loading && (
+			<CustomSwitch
+				checked={userContext.user.online}
+				onChange={() => {updateOnline(userContext.dispatch, !userContext.user.online)}}
+				label={userContext.user.online ? "Online and accepting songs" : "Not accepting songs"}
+				disabled={userContext.user.updateInProgress}
+			/>
+			<CustomToast title="User Update Error" error={userContext.user.error} dismiss={() => dismissToast(userContext.dispatch)}/>
+			{
+				!userContext.user.restaurantName && 
+				<CustomInput placeholder={RESTAURANT_NAME_PLACEHOLDER} buttonClick={handleUpdateClick} disabled={userContext.user.updateInProgress} buttonText="Update"/>
+			}
+			{
+				spotifyState.loading && 
 				<div className="dot-pulse ms-auto me-auto my-4" />
-			)}
+			}
 			<Player
 				{...spotifyState}
 				{...{
@@ -125,6 +109,7 @@ export type TrackType = {
 	album: string;
 	artists: Array<string>;
 	image: string;
+	length: number;
 };
 
 export type DeviceType = {

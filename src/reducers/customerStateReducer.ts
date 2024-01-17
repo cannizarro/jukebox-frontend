@@ -5,7 +5,7 @@ import {
 	LOADING,
 } from "../actions/constants/actionTypes";
 import { TrackType } from "../components/dashboard/Home";
-import { NO_USER_FOUND_FOR_CUSTOMER } from "../constants/errorMessages";
+import { NO_USER_FOUND_FOR_CUSTOMER, TECHNICAL_ERROR } from "../constants/errorMessages";
 
 export default function customerStateReducer(
 	state: CustomerStateType,
@@ -20,7 +20,7 @@ export default function customerStateReducer(
 		case CUSTOMER_STATE_LOAD_FAILURE:
 			return {
 				loading: false,
-				error: action.payload?.response?.status === 410 ? NO_USER_FOUND_FOR_CUSTOMER : action.payload.message
+				error: getCustomerMessageForError(action)
 			} as CustomerStateType;
 		case LOADING:
 			return {
@@ -42,3 +42,16 @@ export type CustomerStateType = {
 	secondsQueued: number;
 	username: string;
 };
+
+export function getCustomerMessageForError(
+	action: ActionType
+): string {
+	switch (action.payload?.response?.status) {
+		case 410:
+			return NO_USER_FOUND_FOR_CUSTOMER;
+        case 500:
+            return TECHNICAL_ERROR;
+		default:
+			return action.payload.message;
+	}
+}

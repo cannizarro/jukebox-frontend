@@ -19,9 +19,9 @@ export function search(search: string, page: number, username: string, dispatch:
 		SEARCH_FAILURE,
 		"/customer/search",
 		{
-			"search": search,
-			"page": page,
-			"username": username
+			search,
+			page,
+			username
 		},
 		null,
 		dispatch

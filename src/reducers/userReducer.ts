@@ -1,7 +1,9 @@
 import {
 	ActionType,
 	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
-	DISABLE_INPUT_BUTTON,
+	DISABLE_USER_INPUT_BUTTON,
+	ONLINE_SWITCH_FAILURE,
+	ONLINE_SWITCH_SUCCESSFULL,
 	RESTAURANT_UPDATE_FAILURE,
 	RESTAURANT_UPDATE_SUCCESSFUL,
 	SET_USER_RESTAURANT,
@@ -39,13 +41,13 @@ export default function userContextReducer(
 			return {
 				...state,
 				restaurantName: action.payload,
-				restaurantInputDisabled: true
+				updateInProgress: false
 			} as UserType;
 		case RESTAURANT_UPDATE_FAILURE:
 			return {
 				...state,
-				error: action.payload,
-				restaurantInputDisabled: true
+				error: action.payload.message,
+				updateInProgress: false
 			} as UserType;
 		case CLEAR_RESTAURANT_NAME_INPUT_ERROR:
 			return {
@@ -57,11 +59,24 @@ export default function userContextReducer(
 				...state,
 				restaurantName: action.payload,
 			} as UserType;
-		case DISABLE_INPUT_BUTTON:
+		case DISABLE_USER_INPUT_BUTTON:
 			return {
 				...state,
-				restaurantInputDisabled: false
+				updateInProgress: true
 			};
+		case ONLINE_SWITCH_SUCCESSFULL:
+			return {
+				...state,
+				online: action.payload,
+				updateInProgress: false
+
+			};
+		case ONLINE_SWITCH_FAILURE:
+			return {
+				...state,
+				error: action.payload.message,
+				updateInProgress: false
+			}
 		default:
 			return state;
 	}
@@ -76,6 +91,7 @@ export type UserType = {
 	registered: boolean;
 	isLoading: boolean;
 	restaurantName: string;
-	restaurantInputDisabled: boolean;
+	updateInProgress: boolean;
 	error: string;
+	online: boolean;
 };
