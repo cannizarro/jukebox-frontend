@@ -2,8 +2,8 @@ import { Alert, Button, Card, CardImg, CardSubtitle, CardText, CardTitle } from 
 import { TrackType } from "../dashboard/Home";
 import { MouseEventHandler, SyntheticEvent, useReducer } from "react";
 import paymentReducer, { PaymentStateType } from "../../reducers/paymentReducer";
-import { pay } from "../../actions/paymentActions";
-import { CUSTOMER_SEARCH_PLACEHOLDER } from "../../constants/constants";
+import { CUSTOMER_SEARCH_PLACEHOLDER } from "../../constants/messageConstants";
+import { pay } from "../../actions/customerActions";
 
 export default function Payment(props: PropsType){
 
@@ -11,7 +11,7 @@ export default function Payment(props: PropsType){
 
     function handlePay(e: SyntheticEvent): void{
         e.stopPropagation();
-        pay(props.track.id, props.username, dispatch);
+        pay(props.track, props.username, dispatch);
     }
 
     return (

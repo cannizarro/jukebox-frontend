@@ -5,7 +5,7 @@ export default function CustomInput(props: PropsType){
         <InputGroup className="px-2 pb-2">
             <Input
                 placeholder={props.placeholder}
-                id="restaurant_name"
+                id={props.id}
                 disabled = {props.disabled}
             />
             <Button color="primary" onClick={props.buttonClick} disabled={props.disabled}>
@@ -20,4 +20,5 @@ type PropsType = {
     disabled: boolean;
     placeholder: string;
     buttonText: string;
+    id: string;
 }

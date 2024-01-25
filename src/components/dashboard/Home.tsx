@@ -9,12 +9,13 @@ import {
 } from "../../actions/constants/actionTypes.ts";
 import { customSendMessage, isPopulated } from "../../utils/genericUtils.ts";
 import { UserContext } from "../../providers/UserContextProvider.tsx";
-import { RESTAURANT_NAME_PLACEHOLDER } from "../../constants/messageConstants.ts";
-import { dismissToast, setRestaurantName, updateOnline } from "../../actions/userActions.ts";
+import { PRICE_PLACEHOLDER, RESTAURANT_NAME_PLACEHOLDER } from "../../constants/messageConstants.ts";
+import { dismissToast, setRestaurantName, udpatePrice, updateOnline } from "../../actions/userActions.ts";
 import Player from "./Player.tsx";
 import CustomToast from "../common/CustomToast.tsx";
 import CustomInput from "../common/CustomInput.tsx";
 import CustomSwitch from "../common/CustomSwitch.tsx";
+import { PRICE_EDIT_BOX_ID, RESTAURANT_EDIT_BOX_ID } from "../../constants/constants.ts";
 
 export default function Home() {
 	const userContext = useContext(UserContext);
@@ -47,10 +48,18 @@ export default function Home() {
 		return () => customClearInterval(ref);
 	}, [readyState, sendMessage]);
 
-	function handleUpdateClick() {
+	function handleRestaurantUpdateClick() {
 		setRestaurantName(
 			userContext.dispatch,
-			(document.getElementById("restaurant_name") as HTMLInputElement)
+			(document.getElementById(RESTAURANT_EDIT_BOX_ID) as HTMLInputElement)
+				?.value,
+		);
+	}
+
+	function handlePriceUpdateClick() {
+		udpatePrice(
+			userContext.dispatch,
+			(document.getElementById(PRICE_EDIT_BOX_ID) as HTMLInputElement)
 				?.value,
 		);
 	}
@@ -66,8 +75,9 @@ export default function Home() {
 			<CustomToast title="User Update Error" error={userContext.user.error} dismiss={() => dismissToast(userContext.dispatch)}/>
 			{
 				!userContext.user.restaurantName && 
-				<CustomInput placeholder={RESTAURANT_NAME_PLACEHOLDER} buttonClick={handleUpdateClick} disabled={userContext.user.updateInProgress} buttonText="Update"/>
+				<CustomInput placeholder={RESTAURANT_NAME_PLACEHOLDER} buttonClick={handleRestaurantUpdateClick} disabled={userContext.user.updateInProgress} buttonText="Update" id={RESTAURANT_EDIT_BOX_ID}/>
 			}
+			<CustomInput placeholder={PRICE_PLACEHOLDER(userContext.user.price)} buttonClick={handlePriceUpdateClick} disabled={userContext.user.updateInProgress} buttonText="Update" id={PRICE_EDIT_BOX_ID}/>
 			{
 				spotifyState.loading && 
 				<div className="dot-pulse ms-auto me-auto my-4" />
@@ -110,6 +120,7 @@ export type TrackType = {
 	artists: Array<string>;
 	image: string;
 	length: number;
+	uri: string;
 };
 
 export type DeviceType = {

@@ -1,12 +1,12 @@
 import {
 	ActionType,
-	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
-	DISABLE_USER_INPUT_BUTTON,
-	ONLINE_SWITCH_FAILURE,
+	CLEAR_INPUT_ERROR,
+	DISABLE_USER_INPUT_BUTTON as DISABLE_USER_INPUT,
 	ONLINE_SWITCH_SUCCESSFULL,
-	RESTAURANT_UPDATE_FAILURE,
+	PRICE_UPDATE_SUCCESSFUL,
 	RESTAURANT_UPDATE_SUCCESSFUL,
 	SET_USER_RESTAURANT,
+	UPDATE_FAILURE,
 	USER_LOADING,
 	USER_LOGIN_FAILURE,
 	USER_LOGIN_SUCCESSFULL,
@@ -40,16 +40,28 @@ export default function userContextReducer(
 		case RESTAURANT_UPDATE_SUCCESSFUL:
 			return {
 				...state,
-				restaurantName: action.payload,
+				restaurantName: action.payload.restaurantName,
 				updateInProgress: false
 			} as UserType;
-		case RESTAURANT_UPDATE_FAILURE:
+		case ONLINE_SWITCH_SUCCESSFULL:
+			return {
+				...state,
+				online: action.payload.online,
+				updateInProgress: false
+			};
+		case PRICE_UPDATE_SUCCESSFUL:
+			return{
+				...state,
+				price: action.payload.price,
+				updateInProgress: false
+			}
+		case UPDATE_FAILURE:
 			return {
 				...state,
 				error: action.payload.message,
 				updateInProgress: false
 			} as UserType;
-		case CLEAR_RESTAURANT_NAME_INPUT_ERROR:
+		case CLEAR_INPUT_ERROR:
 			return {
 				...state,
 				error: "",
@@ -59,24 +71,11 @@ export default function userContextReducer(
 				...state,
 				restaurantName: action.payload,
 			} as UserType;
-		case DISABLE_USER_INPUT_BUTTON:
+		case DISABLE_USER_INPUT:
 			return {
 				...state,
 				updateInProgress: true
 			};
-		case ONLINE_SWITCH_SUCCESSFULL:
-			return {
-				...state,
-				online: action.payload,
-				updateInProgress: false
-
-			};
-		case ONLINE_SWITCH_FAILURE:
-			return {
-				...state,
-				error: action.payload.message,
-				updateInProgress: false
-			}
 		default:
 			return state;
 	}
@@ -94,4 +93,5 @@ export type UserType = {
 	updateInProgress: boolean;
 	error: string;
 	online: boolean;
+	price: number;
 };

@@ -2,12 +2,12 @@ import React from "react";
 import { invokeRestApi } from "../api/axiosHelper";
 import {
 	ActionType,
-	CLEAR_RESTAURANT_NAME_INPUT_ERROR,
+	CLEAR_INPUT_ERROR,
 	DISABLE_USER_INPUT_BUTTON,
-	ONLINE_SWITCH_FAILURE,
 	ONLINE_SWITCH_SUCCESSFULL,
-	RESTAURANT_UPDATE_FAILURE,
+	PRICE_UPDATE_SUCCESSFUL,
 	RESTAURANT_UPDATE_SUCCESSFUL,
+	UPDATE_FAILURE,
 	USER_LOADING,
 	USER_LOGIN_FAILURE,
 	USER_LOGIN_SUCCESSFULL,
@@ -15,6 +15,8 @@ import {
 	USER_LOGOUT_SUCCESSFUL,
 	USER_REGISTRATION_FAILURE,
 } from "./constants/actionTypes";
+import { UserType } from "../reducers/userReducer";
+import { PRICE_EDIT_BOX_ID } from "../constants/constants";
 
 export function registerUser(
 	dispatch: React.Dispatch<ActionType>,
@@ -71,24 +73,16 @@ export function setRestaurantName(
 	
 	if (!restaurantName) {
 		dispatch({
-			type: RESTAURANT_UPDATE_FAILURE,
+			type: UPDATE_FAILURE,
 			payload: {message: "Input is not valid"},
 		});
 		return;
 	}
-	invokeRestApi(
-		"put",
-		RESTAURANT_UPDATE_SUCCESSFUL,
-		RESTAURANT_UPDATE_FAILURE,
-		"/admin/updateRestaurant",
-		{ restaurantName },
-		null,
-		dispatch,
-	);
+	updateUser(dispatch, {restaurantName} as UserType, RESTAURANT_UPDATE_SUCCESSFUL, UPDATE_FAILURE);
 }
 
 export function dismissToast(dispatch: React.Dispatch<ActionType>) {
-	dispatch({ type: CLEAR_RESTAURANT_NAME_INPUT_ERROR, payload: "" });
+	dispatch({ type: CLEAR_INPUT_ERROR, payload: "" });
 }
 
 export function updateOnline(dispatch: React.Dispatch<ActionType>, online: boolean){
@@ -97,13 +91,36 @@ export function updateOnline(dispatch: React.Dispatch<ActionType>, online: boole
 		type: DISABLE_USER_INPUT_BUTTON
 	} as ActionType);
 	
-	invokeRestApi(
+	updateUser(dispatch, {online} as UserType, ONLINE_SWITCH_SUCCESSFULL, UPDATE_FAILURE);
+}
+
+export function udpatePrice(dispatch: React.Dispatch<ActionType>, priceString: string){
+	const price = Number(priceString);
+	
+	dispatch({
+		type: DISABLE_USER_INPUT_BUTTON
+	} as ActionType);
+	
+	if(isNaN(price)){
+		dispatch({
+			type: UPDATE_FAILURE,
+			payload: {message: "Input is not valid"},
+		});
+		return;
+	}
+	
+	updateUser(dispatch, {price} as UserType, PRICE_UPDATE_SUCCESSFUL, UPDATE_FAILURE)
+		.then(() => (document.getElementById(PRICE_EDIT_BOX_ID) as HTMLInputElement).value = '');
+}
+
+function updateUser(dispatch: React.Dispatch<ActionType>, user: UserType, successAction: string, failureAction: string){
+	return invokeRestApi(
 		"put",
-		ONLINE_SWITCH_SUCCESSFULL,
-		ONLINE_SWITCH_FAILURE,
-		"/admin/updateOnline",
-		{ online },
+		successAction,
+		failureAction,
+		"/admin/updateUser",
 		null,
+		user,
 		dispatch
 	)
 }

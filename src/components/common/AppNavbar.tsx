@@ -48,7 +48,7 @@ export default function AppNavbar() {
 		<Navbar color="dark" dark expand="md" fixed="top">
 			<NavbarBrand
 				className="d-flex align-items-center"
-				onClick={toggle}
+				href={userContext.user.username ? "/" : ""}
 			>
 				<img src="logo.svg" className="logo" />
 				<span className="d-flex flex-column ms-2">

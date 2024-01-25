@@ -7,7 +7,7 @@ import Home from "./components/dashboard/Home.tsx";
 import Login from "./components/Login.tsx";
 import CustomerHome from "./components/customer/CustomerHome.tsx";
 import RequireAuth from "./providers/RequireAuth.tsx";
-import Transactions from "./components/customer/Transactions.tsx";
+import Transactions from "./components/dashboard/Transactions.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<BrowserRouter>

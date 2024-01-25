@@ -1,4 +1,3 @@
-import { CUSTOMER_SEARCH_PLACEHOLDER } from "../../constants/constants";
 import searchStateReducer, { SearchStateType } from "../../reducers/searchStateReducer";
 import { useReducer } from "react";
 import { dismissToast, search } from "../../actions/searchActions";
@@ -6,6 +5,8 @@ import { isPopulated } from "../../utils/genericUtils";
 import Queue from "../common/Queue";
 import CustomToast from "../common/CustomToast";
 import CustomInput from "../common/CustomInput";
+import { CUSTOMER_SEARCH_PLACEHOLDER } from "../../constants/messageConstants";
+import { SEARCH_EDIT_BOX_ID } from "../../constants/constants";
 
 export default function Search(props: PropsType){
 
@@ -16,7 +17,7 @@ export default function Search(props: PropsType){
 
     function handleSearch() {
 		search(
-            (document.getElementById("restaurant_name") as HTMLInputElement)?.value,
+            (document.getElementById(SEARCH_EDIT_BOX_ID) as HTMLInputElement)?.value,
             searchState.page,
             props.username,
             dispatch
@@ -26,7 +27,7 @@ export default function Search(props: PropsType){
     return (
         <>
             <CustomToast title="Search Error" dismiss={() => dismissToast(dispatch)} error={searchState.error}/>
-            <CustomInput buttonClick={handleSearch} disabled={searchState.loading} placeholder={CUSTOMER_SEARCH_PLACEHOLDER(props.secondsQueued)} buttonText="Search"/>
+            <CustomInput buttonClick={handleSearch} disabled={searchState.loading} placeholder={CUSTOMER_SEARCH_PLACEHOLDER(props.secondsQueued)} buttonText="Search" id={SEARCH_EDIT_BOX_ID}/>
             {searchState.loading && <div className="dot-pulse ms-auto me-auto my-4" />}
             {isPopulated(searchState.tracks) && <Queue queue={searchState.tracks} secondsQueued={searchState.secondsQueued} username={props.username}/>}
         </>
