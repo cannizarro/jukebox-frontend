@@ -8,7 +8,7 @@ import {
 	PAYMENT_REQUEST_FAILURE,
 	PAYMENT_REQUEST_LOADING,
 	PAYMENT_REQUEST_SUCCESS,
-	SET_USER_RESTAURANT,
+	SET_USER_RESTAURANT
 } from "./constants/actionTypes";
 import { TrackType } from "../components/dashboard/Home";
 
