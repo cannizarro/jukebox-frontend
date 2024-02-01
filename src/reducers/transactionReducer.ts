@@ -1,8 +1,16 @@
-import { ActionType, CLEAR_TRANSACTION_ERROR, PUSH_CURRENT_PAGE_HISTORY, TRANSACTION_ACTION_FAILURE, TRANSACTION_ACTION_SUCCESSFULL } from "../actions/constants/actionTypes";
+import { ActionType, CLEAR_TRANSACTION_ERROR, TRANSACTION_ACTION_FAILURE, TRANSACTION_ACTION_SUCCESSFULL } from "../actions/constants/actionTypes";
 
 export default function transactionReducer(state: TransactionPageType, action: ActionType): TransactionPageType{
     switch(action.type){
         case TRANSACTION_ACTION_SUCCESSFULL:
+            if(state.pageKeys && Array.isArray(state.pageKeys)){
+                if(state.pageKeys.includes(action.payload.nextKey))
+                    state.pageKeys = removeAllAfter(state.pageKeys, action.payload.nextKey);
+                else
+                    state.pageKeys.push(action.payload.currentKey);
+            }
+            else
+                state.pageKeys = [action.payload.currentKey];
             return {
                 ...state,
                 ...action.payload,
@@ -18,16 +26,17 @@ export default function transactionReducer(state: TransactionPageType, action: A
                 ...state,
                 error: ""
             }
-        case PUSH_CURRENT_PAGE_HISTORY:
-            if(state.pageKeys && Array.isArray(state.pageKeys))
-                state.pageKeys.push(action.payload);
-            else
-                state.pageKeys = [action.payload];
-                
-            return state;
         default:
             return state;
     }
+}
+
+function removeAllAfter(array: Array<string>, key: string){
+    const indexOfElement = array.indexOf(key);
+    if(indexOfElement !== -1) {
+        array.splice(indexOfElement, array.length);
+    }
+    return array;
 }
 
 export type TransactionPageType = {

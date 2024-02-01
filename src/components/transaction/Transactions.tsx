@@ -18,18 +18,21 @@ export default function Transactions(){
         getTransactions(undefined, undefined, dispatch);
     }, [])
 
+    function getPage(){
+        return transactionPage.pageKeys && 
+            transactionPage.pageKeys.length;
+    }
+
+    function getPrevKey(pageKeys: Array<string>): string{
+        return pageKeys[transactionPage.pageKeys.length-2];
+    }
+
     function handleNext(){
         getTransactions(transactionPage.nextKey, transactionPage.currentKey, dispatch);
     }
 
     function handlePrev(){
-        getTransactions(transactionPage.pageKeys.pop(), undefined, dispatch);
-    }
-
-    function getPage(){
-        return transactionPage.pageKeys ? 
-            transactionPage.pageKeys.length + 1 :
-            1;
+        getTransactions(getPrevKey(transactionPage.pageKeys), undefined, dispatch);
     }
 
     return (
@@ -49,13 +52,13 @@ export default function Transactions(){
                 <ReactDataGrid className="rounded rdg-light" columns={columns} rows={transactionPage.transactions}/>
             }
             <Pagination className="justify-content-center mt-2">
-                <PaginationItem className="ms-auto" disabled={!(transactionPage.pageKeys && transactionPage.pageKeys.length > 0)}>
+                <PaginationItem className="ms-auto" disabled={transactionPage.currentKey==="firstKey"}>
                     <PaginationLink onClick={handlePrev} previous/>
                 </PaginationItem>
                 <PaginationItem>
                     <PaginationLink disabled={true}>{getPage()}</PaginationLink>
                 </PaginationItem>
-                <PaginationItem disabled={!transactionPage.nextKey}>
+                <PaginationItem disabled={transactionPage.nextKey==="lastKey"}>
                     <PaginationLink onClick={handleNext} next/>
                 </PaginationItem>
             </Pagination>
