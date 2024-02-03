@@ -1,21 +1,37 @@
-import './App.css'
-import { useCookies } from 'react-cookie';
+import { useContext } from "react";
+import { UserContext } from "./providers/UserContextProvider";
+import AppNavbar from "./components/common/AppNavbar";
+import {
+	ACTIVITY_PADDING_TOP_WITHOUT_RESTAURANT,
+	ACTIVITY_PADDING_TOP_WITH_RESTAURANT,
+} from "./constants/constants";
+import { Outlet } from "react-router-dom";
 
-function App() {
-  const params = new URLSearchParams(window.location.search);
-  const [cookie, setCookie] = useCookies(['user']);
-  params.get('cookie') && setCookie('session', params.get('cookie'), {path: '/'});
+export default function App() {
+	const userContext = useContext(UserContext);
+	const currentYear = new Date().getFullYear();
+	const copyrightString =
+		currentYear === 2023 ? "2023" : "2023-" + currentYear;
+	const paddingTop = userContext.user.restaurantName
+		? ACTIVITY_PADDING_TOP_WITH_RESTAURANT
+		: ACTIVITY_PADDING_TOP_WITHOUT_RESTAURANT;
 
-  return (
-    <>
-      {
-        params.get("error") ? 
-          <p>Error occured in auth: {params.get("error")}</p> :
-          cookie.session ?
-            <p>Logged in</p> :
-            <a href='http://localhost:8000/jukebox/login'>Login with spotify</a>}
-    </>
-  )
+	return (
+		<div style={{ paddingTop: paddingTop }}>
+			<AppNavbar />
+			<Outlet/>
+			<footer className="py-4 bg-dark d-flex flex-column text-light justify-content-center align-items-center">
+				<img src="logo.svg" className="logo" />
+				<small>© {copyrightString}</small>
+				<small className="fw-light m-2">
+					For more fine grained control or in case of inconsistencies
+					please visit{" "}
+					<a href="https://open.spotify.com" target="_blank">
+						Spotify
+					</a>{" "}
+					from the navbar at the top.
+				</small>
+			</footer>
+		</div>
+	);
 }
-
-export default App

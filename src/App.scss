@@ -1,0 +1,37 @@
+@use "scss/colors";
+@use "three-dots" with (
+	$dot-width: 10px,
+	$dot-height: 10px,
+	$dot-color: colors.$primary
+);
+
+$theme-colors: (
+	"primary": colors.$primary,
+	"secondary": colors.$primary-light,
+	"success": colors.$success,
+	"info": colors.$info,
+	"warning": colors.$warning,
+	"danger": colors.$danger,
+	"light": colors.$light,
+	"dark": colors.$dark,
+);
+
+$small-font-size: 0.7em;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+%full-screen {
+	min-height: 100vh;
+}
+
+.activity {
+	@extend %full-screen;
+}
+
+img.logo {
+	width: 30px;
+	height: 30px;
+	margin: 4px;
+}
+
+  

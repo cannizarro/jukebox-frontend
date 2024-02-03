@@ -1,0 +1,17 @@
+$primary: #9424d1ff;
+$primary-light: #efd9faff;
+$contrast-dark: #362417ff;
+$contrast-light: #92817aff;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #51216bff;
+
+:export {
+	success: $success;
+	danger: $danger;
+	primary: $primary;
+	dark: $dark;
+}
