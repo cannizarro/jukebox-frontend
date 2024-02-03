@@ -1,4 +1,5 @@
-import { ActionType, CLEAR_TRANSACTION_ERROR, TRANSACTION_ACTION_FAILURE, TRANSACTION_ACTION_SUCCESSFULL } from "../actions/constants/actionTypes";
+import { ActionType, CLEAR_TRANSACTION_ERROR, TRANSACTION_ACTION_FAILURE, TRANSACTION_ACTION_SUCCESSFULL, UPDATE_SORT_DIRECTIION as UPDATE_SORT_DIRECTIION } from "../actions/constants/actionTypes";
+import { FIRST_PAGE_START_KEY } from "../constants/constants";
 
 export default function transactionReducer(state: TransactionPageType, action: ActionType): TransactionPageType{
     switch(action.type){
@@ -26,6 +27,15 @@ export default function transactionReducer(state: TransactionPageType, action: A
                 ...state,
                 error: ""
             }
+        case UPDATE_SORT_DIRECTIION:
+            return {
+                ...intialValue,
+                request: {
+                    ...intialValue.request,
+                    ascending: !state.request.ascending
+                },
+                pageKeys: []
+            }
         default:
             return state;
     }
@@ -45,6 +55,13 @@ export type TransactionPageType = {
     transactions: Array<TransactionType>;
     error: string;
     pageKeys: Array<string>;
+    request: TransactionPageRequestType
+}
+
+export type TransactionPageRequestType = {
+    startKey: string;
+    fulfilled: boolean | null;
+    ascending: boolean;
 }
 
 export type TransactionType = {
@@ -55,3 +72,11 @@ export type TransactionType = {
     trackUrl: string;
     createTimestamp: string;
 }
+
+export const intialValue = {
+    currentKey: FIRST_PAGE_START_KEY, 
+    request: {
+        startKey: FIRST_PAGE_START_KEY,
+        ascending: true
+    } as TransactionPageRequestType,
+} as TransactionPageType

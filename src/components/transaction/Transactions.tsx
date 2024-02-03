@@ -1,22 +1,21 @@
 import { useEffect, useReducer } from "react";
-import transactionReducer, { TransactionPageType } from "../../reducers/transactionReducer";
+import transactionReducer, { intialValue } from "../../reducers/transactionReducer";
 import { getTransactions } from "../../actions/transactionActions";
 import CustomToast from "../common/CustomToast";
-import { ActionType, CLEAR_TRANSACTION_ERROR } from "../../actions/constants/actionTypes";
+import { ActionType, CLEAR_TRANSACTION_ERROR, UPDATE_SORT_DIRECTIION } from "../../actions/constants/actionTypes";
 import ReactDataGrid from "react-data-grid";
-import { columns } from "./gridProperties";
+import { columns, sortColumns } from "./gridProperties";
 import "react-data-grid/lib/styles.css";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
-import { FIRST_PAGE_START_KEY } from "../../constants/constants";
 
 
 export default function Transactions(){
 
-    const [transactionPage, dispatch] = useReducer(transactionReducer, {currentKey: FIRST_PAGE_START_KEY} as TransactionPageType);
+    const [transactionPage, dispatch] = useReducer(transactionReducer, intialValue);
 
     useEffect(() => {
-        getTransactions(undefined, undefined, dispatch);
-    }, [])
+        getTransactions(transactionPage.request, dispatch);
+    }, [transactionPage.request])
 
     function getPage(){
         return transactionPage.pageKeys && 
@@ -28,11 +27,28 @@ export default function Transactions(){
     }
 
     function handleNext(){
-        getTransactions(transactionPage.nextKey, transactionPage.currentKey, dispatch);
+        getTransactions(
+            {startKey: transactionPage.nextKey, ascending: transactionPage.request.ascending, fulfilled: transactionPage.request.fulfilled},
+             dispatch
+        );
     }
 
     function handlePrev(){
-        getTransactions(getPrevKey(transactionPage.pageKeys), undefined, dispatch);
+        getTransactions(
+            {startKey: getPrevKey(transactionPage.pageKeys), ascending: transactionPage.request.ascending, fulfilled: transactionPage.request.fulfilled},
+            dispatch
+        );
+    }
+
+    function handleHeaderClick(){
+        dispatch({
+            type: UPDATE_SORT_DIRECTIION
+        } as ActionType)
+    }
+
+    function getSortDirection(ascending: boolean){
+        return ascending ? "ASC" : "DESC";
+
     }
 
     return (
@@ -49,10 +65,10 @@ export default function Transactions(){
             }
             {
                 transactionPage.transactions &&
-                <ReactDataGrid className="rounded rdg-light" columns={columns} rows={transactionPage.transactions}/>
+                <ReactDataGrid className="rounded rdg-light" columns={columns(handleHeaderClick)} rows={transactionPage.transactions} sortColumns={sortColumns(getSortDirection(transactionPage.request.ascending))}/>
             }
-            <Pagination className="justify-content-center mt-2">
-                <PaginationItem className="ms-auto" disabled={transactionPage.currentKey==="firstKey"}>
+            <Pagination className="align-self-end justify-content-center mt-2">
+                <PaginationItem disabled={transactionPage.currentKey==="firstKey"}>
                     <PaginationLink onClick={handlePrev} previous/>
                 </PaginationItem>
                 <PaginationItem>
