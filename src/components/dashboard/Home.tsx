@@ -25,7 +25,7 @@ export default function Home() {
 		fetchState(dispatch);
 		ref.current = setInterval(
 			() => fetchState(dispatch),
-			6000,
+			60000,
 		);
 		return () => {
 			clearInterval(ref?.current);
