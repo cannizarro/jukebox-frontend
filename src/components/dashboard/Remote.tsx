@@ -14,7 +14,6 @@ import {
 	skipPrevious,
 } from "../../actions/playbackStateActions";
 import { ActionType } from "../../actions/constants/actionTypes";
-import { SendMessage } from "react-use-websocket";
 
 export default function Remote(props: PropType) {
 	function onPauseClick() {
@@ -33,7 +32,6 @@ export default function Remote(props: PropType) {
 					skipPrevious(
 						props.dispatch,
 						props.device.id,
-						props.sendMessage,
 					)
 				}
 			>
@@ -56,7 +54,6 @@ export default function Remote(props: PropType) {
 						skipNext(
 							props.dispatch,
 							props.device.id,
-							props.sendMessage,
 						)
 					}
 				>
@@ -73,5 +70,4 @@ type PropType = {
 	dispatch: React.Dispatch<ActionType>;
 	nextAvailable: boolean;
 	actionInProcess: boolean;
-	sendMessage: SendMessage;
 };

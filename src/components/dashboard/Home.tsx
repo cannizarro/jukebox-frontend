@@ -1,13 +1,8 @@
-import useWebSocket, { ReadyState, SendMessage } from "react-use-websocket";
 import { useContext, useEffect, useReducer, useRef } from "react";
 import Queue from "../common/Queue.tsx";
 import ConnectionInfo from "./ConnectionInfo.tsx";
 import playbackStateReducer from "../../reducers/playbackStateReducer.ts";
-import {
-	ActionType,
-	PLAYBACK_STATE_UPDATE,
-} from "../../actions/constants/actionTypes.ts";
-import { customSendMessage, isPopulated } from "../../utils/genericUtils.ts";
+import { isPopulated } from "../../utils/genericUtils.ts";
 import { UserContext } from "../../providers/UserContextProvider.tsx";
 import { PRICE_PLACEHOLDER, RESTAURANT_NAME_PLACEHOLDER } from "../../constants/messageConstants.ts";
 import { dismissToast, setRestaurantName, udpatePrice, updateOnline } from "../../actions/userActions.ts";
@@ -16,6 +11,7 @@ import CustomToast from "../common/CustomToast.tsx";
 import CustomInput from "../common/CustomInput.tsx";
 import CustomSwitch from "../common/CustomSwitch.tsx";
 import { PRICE_EDIT_BOX_ID, RESTAURANT_EDIT_BOX_ID } from "../../constants/constants.ts";
+import { fetchState } from "../../actions/playbackStateActions.ts";
 
 export default function Home() {
 	const userContext = useContext(UserContext);
@@ -23,30 +19,19 @@ export default function Home() {
 		playbackStateReducer,
 		{} as SpotifyStateType,
 	);
-	const { sendMessage, readyState } = useWebSocket(
-		import.meta.env.VITE_WEBSOCKET_BASE_URL + "/ws/state",
-		{
-			onMessage: (event) =>
-				dispatch({
-					type: PLAYBACK_STATE_UPDATE,
-					payload: event,
-				} as ActionType),
-		},
-	);
 	const ref = useRef(0);
 
 	useEffect(() => {
-		if (readyState === ReadyState.OPEN) {
-			customSendMessage(sendMessage, dispatch);
-			ref.current = setInterval(
-				() => customSendMessage(sendMessage, dispatch),
-				60000,
-			);
-		} else {
-			customClearInterval(ref);
-		}
-		return () => customClearInterval(ref);
-	}, [readyState, sendMessage]);
+		fetchState(dispatch);
+		ref.current = setInterval(
+			() => fetchState(dispatch),
+			6000,
+		);
+		return () => {
+			clearInterval(ref?.current);
+			ref.current = 0;
+		};
+	}, [dispatch]);
 
 	function handleRestaurantUpdateClick() {
 		setRestaurantName(
@@ -86,19 +71,13 @@ export default function Home() {
 				{...spotifyState}
 				{...{
 					dispatch,
-					sendMessage,
 					nextAvailable: isPopulated(spotifyState.queue),
 				}}
 			/>
 			{isPopulated(spotifyState.queue) && <Queue {...spotifyState} secondsQueued={null} username={null}/>}
-			<ConnectionInfo {...spotifyState} readyState={readyState} />
+			<ConnectionInfo {...spotifyState}/>
 		</div>
 	);
-}
-
-function customClearInterval(ref: React.MutableRefObject<number>) {
-	clearInterval(ref?.current);
-	ref.current = 0;
 }
 
 export type SpotifyStateType = {
@@ -109,7 +88,6 @@ export type SpotifyStateType = {
 	error: string;
 	playing: boolean;
 	actionInProcess: boolean;
-	sendMessage: SendMessage;
 	loading: boolean;
 };
 

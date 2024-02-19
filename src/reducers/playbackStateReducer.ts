@@ -10,7 +10,8 @@ import {
 	PLAYBACK_SKIP_NEXT_SUCCESSFULL,
 	PLAYBACK_SKIP_PREVIOUS_FAILURE,
 	PLAYBACK_SKIP_PREVIOUS_SUCCESSFULL,
-	PLAYBACK_STATE_UPDATE,
+	PLAYBACK_STATE_UPDATE_FAILURE,
+	PLAYBACK_STATE_UPDATE_SUCCESSFUL,
 } from "../actions/constants/actionTypes";
 import { SpotifyStateType } from "../components/dashboard/Home";
 import { NO_PLAYBACK_ERROR } from "../constants/errorMessages";
@@ -58,11 +59,18 @@ export default function playbackStateReducer(
 				action.payload?.response?.status,
 				state.playing,
 			);
-		case PLAYBACK_STATE_UPDATE:
+		case PLAYBACK_STATE_UPDATE_SUCCESSFUL:
 			return {
-				...((action.payload && action.payload.data
-					? JSON.parse(action.payload.data)
-					: {}) as SpotifyStateType),
+				...action.payload as SpotifyStateType,
+				actionInProcess: state.actionInProcess,
+				loading: false,
+			};
+		case PLAYBACK_STATE_UPDATE_FAILURE:
+			return {
+				...{
+					error: action.payload.message,
+					timestamp: formatDateTo12Hour(new Date())
+				} as SpotifyStateType,
 				actionInProcess: state.actionInProcess,
 				loading: false,
 			};

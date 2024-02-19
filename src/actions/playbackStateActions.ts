@@ -1,8 +1,8 @@
-import { SendMessage } from "react-use-websocket";
 import { invokeRestApi } from "../api/axiosHelper";
 import {
 	ACTION_IN_PROCESS,
 	ActionType,
+	LOADING,
 	PLAYBACK_PAUSE_FAILURE,
 	PLAYBACK_PAUSE_SUCCESSFULL,
 	PLAYBACK_RESUME_FAILURE,
@@ -11,8 +11,9 @@ import {
 	PLAYBACK_SKIP_NEXT_SUCCESSFULL,
 	PLAYBACK_SKIP_PREVIOUS_FAILURE,
 	PLAYBACK_SKIP_PREVIOUS_SUCCESSFULL,
+	PLAYBACK_STATE_UPDATE_FAILURE,
+	PLAYBACK_STATE_UPDATE_SUCCESSFUL,
 } from "./constants/actionTypes";
-import { customSendMessage } from "../utils/genericUtils";
 
 export function pausePlayback(
 	dispatch: React.Dispatch<ActionType>,
@@ -49,7 +50,6 @@ export function resumePlayback(
 export function skipNext(
 	dispatch: React.Dispatch<ActionType>,
 	deviceId: string,
-	sendMessage: SendMessage,
 ) {
 	dispatch({ type: ACTION_IN_PROCESS } as ActionType);
 	invokeRestApi(
@@ -60,13 +60,12 @@ export function skipNext(
 		{ deviceId },
 		null,
 		dispatch,
-	).then(() => customSendMessage(sendMessage, dispatch));
+	).then(() => fetchState(dispatch));
 }
 
 export function skipPrevious(
 	dispatch: React.Dispatch<ActionType>,
 	deviceId: string,
-	sendMessage: SendMessage,
 ) {
 	dispatch({ type: ACTION_IN_PROCESS } as ActionType);
 	invokeRestApi(
@@ -77,5 +76,18 @@ export function skipPrevious(
 		{ deviceId },
 		null,
 		dispatch,
-	).then(() => customSendMessage(sendMessage, dispatch));
+	).then(() => fetchState(dispatch));
+}
+
+export function fetchState(	dispatch: React.Dispatch<ActionType> ){
+	dispatch({ type: LOADING } as ActionType);
+	invokeRestApi(
+		"get",
+		PLAYBACK_STATE_UPDATE_SUCCESSFUL,
+		PLAYBACK_STATE_UPDATE_FAILURE,
+		"/admin/state",
+		null,
+		null,
+		dispatch,
+	);
 }

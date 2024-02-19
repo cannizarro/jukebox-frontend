@@ -1,6 +1,5 @@
 import { faCloud } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReadyState } from "react-use-websocket";
 import { formatStringTo12HourDate } from "../../utils/genericUtils.ts";
 import { colors } from "../../constants/colors.ts";
 import { DeviceType } from "./Home.tsx";
@@ -13,7 +12,7 @@ export default function ConnectionInfo(props: PropType) {
 					className="me-2"
 					icon={faCloud}
 					color={
-						props.readyState === ReadyState.OPEN
+						props.device
 							? colors.success
 							: colors.danger
 					}
@@ -24,7 +23,7 @@ export default function ConnectionInfo(props: PropType) {
 					)}
 			</div>
 			<p className="m-2 mt-0 align-self-end">
-				{props.readyState === ReadyState.OPEN &&
+				{props.device &&
 				props.device &&
 				props.device.name
 					? "Connected to: ".concat(props.device.name)
@@ -36,6 +35,5 @@ export default function ConnectionInfo(props: PropType) {
 
 type PropType = {
 	timestamp: string;
-	readyState: ReadyState;
 	device: DeviceType;
 };

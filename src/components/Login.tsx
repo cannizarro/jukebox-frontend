@@ -32,7 +32,7 @@ export default function Login() {
 					<Button
 						color="primary"
 						className="m-auto"
-						href="http://localhost:8080/jukebox/public/login"
+						href={import.meta.env.VITE_BASE_BACKEND_URL + "/public/login"}
 						onClick={() => setUserLoading(userContext.dispatch)}
 					>
 						<FontAwesomeIcon icon={faSpotify} className="me-2" />

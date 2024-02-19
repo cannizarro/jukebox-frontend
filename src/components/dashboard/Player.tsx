@@ -1,7 +1,6 @@
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import { DeviceType, TrackType } from "../dashboard/Home";
 import { ActionType } from "../../actions/constants/actionTypes";
-import { SendMessage } from "react-use-websocket";
 import Remote from "./Remote";
 import { Fade } from "react-awesome-reveal";
 
@@ -28,12 +27,10 @@ export default function Player(props: PlayerPropType) {
 							</span>
 							{props.track &&
 								props.dispatch &&
-								props.sendMessage &&
 								props.device && (
 									<Remote
 										{...props}
 										dispatch={props.dispatch}
-										sendMessage={props.sendMessage}
 										device={props.device}
 									/>
 								)}
@@ -65,5 +62,4 @@ export type PlayerPropType = {
 	dispatch: React.Dispatch<ActionType> | null;
 	nextAvailable: boolean;
 	actionInProcess: boolean;
-	sendMessage: SendMessage | null;
 };
