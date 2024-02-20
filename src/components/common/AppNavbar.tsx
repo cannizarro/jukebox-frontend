@@ -14,6 +14,7 @@ import CustomLink, { PropType as LinkPropType } from "./CustomLink";
 import QRCodeComponent from "../dashboard/QRCode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
+import { getImageUrl } from "../../utils/genericUtils";
 
 export default function AppNavbar() {
 	const userContext = useContext(UserContext);
@@ -50,7 +51,7 @@ export default function AppNavbar() {
 				className="d-flex align-items-center"
 				href={userContext.user.username ? "/" : ""}
 			>
-				<img src="logo.svg" className="logo" />
+				<img src={getImageUrl("/logo.svg")} className="logo" />
 				<span className="d-flex flex-column ms-2">
 					{APP_NAME}
 					{userContext.user.restaurantName && (

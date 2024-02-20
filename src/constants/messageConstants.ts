@@ -9,3 +9,5 @@ export const CUSTOMER_SEARCH_PLACEHOLDER = (seconds: number) => {
 }
 
 export const PRICE_PLACEHOLDER = (price: number) => `Current price is ${price}`;
+
+export const PAYMENT_SUCCESS_MESSAGE = "Your song has been queued.";

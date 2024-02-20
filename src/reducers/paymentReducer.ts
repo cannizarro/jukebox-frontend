@@ -9,7 +9,7 @@ export default function paymentReducer(state: PaymentStateType, action: ActionTy
         case PAYMENT_REQUEST_SUCCESS:
             return {
                 loading: false,
-                fulfilled: true
+                success: true
             } as PaymentStateType;
         case PAYMENT_REQUEST_FAILURE:
             return {error: action.payload.message} as PaymentStateType;
@@ -21,6 +21,6 @@ export default function paymentReducer(state: PaymentStateType, action: ActionTy
 
 export type PaymentStateType = {
     loading: boolean,
-    fulfilled: boolean,
+    success: boolean,
     error: string
 }

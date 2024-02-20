@@ -2,7 +2,7 @@ import { Alert, Button, Card, CardImg, CardSubtitle, CardText, CardTitle } from 
 import { TrackType } from "../dashboard/Home";
 import { MouseEventHandler, SyntheticEvent, useReducer } from "react";
 import paymentReducer, { PaymentStateType } from "../../reducers/paymentReducer";
-import { CUSTOMER_SEARCH_PLACEHOLDER } from "../../constants/messageConstants";
+import { CUSTOMER_SEARCH_PLACEHOLDER, PAYMENT_SUCCESS_MESSAGE } from "../../constants/messageConstants";
 import { pay } from "../../actions/customerActions";
 
 export default function Payment(props: PropsType){
@@ -37,6 +37,7 @@ export default function Payment(props: PropsType){
                 </div>
             </div>
             {paymentState.error && <Alert className="mt-2" color="danger">{paymentState.error}</Alert>}
+            {paymentState.success && <Alert className="mt-2" color="success">{PAYMENT_SUCCESS_MESSAGE}</Alert>}
         </Card>
         </>
     )
