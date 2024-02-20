@@ -6,6 +6,7 @@ import {
 	ACTIVITY_PADDING_TOP_WITH_RESTAURANT,
 } from "./constants/constants";
 import { Outlet } from "react-router-dom";
+import { getImageUrl } from "./utils/genericUtils";
 
 export default function App() {
 	const userContext = useContext(UserContext);
@@ -21,7 +22,7 @@ export default function App() {
 			<AppNavbar />
 			<Outlet/>
 			<footer className="py-4 bg-dark d-flex flex-column text-light justify-content-center align-items-center">
-				<img src="logo.svg" className="logo" />
+				<img src={getImageUrl("logo.svg")} className="logo" />
 				<small>© {copyrightString}</small>
 				<small className="fw-light m-2">
 					For more fine grained control or in case of inconsistencies

@@ -3,11 +3,12 @@ import { UserContext } from "../../providers/UserContextProvider";
 import { useContext, useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { colors } from "../../constants/colors";
+import { getImageUrl } from "../../utils/genericUtils";
 
 const qrCode = new QRCodeStyling({
     width: 400,
     height: 400,
-    image: "logo-qr.svg",
+    image: getImageUrl("logo-qr.svg"),
     dotsOptions: {
         color: colors.dark,
         type: "rounded"

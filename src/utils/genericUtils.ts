@@ -21,3 +21,7 @@ export function formatDateTo12Hour(date: Date) {
 export function isPopulated(array: Array<unknown>): boolean {
 	return array && Array.isArray(array) && array.length > 0;
 }
+
+export function getImageUrl(imagePath: string){
+	return window.location.origin + "/" + imagePath;
+}
