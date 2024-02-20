@@ -51,7 +51,7 @@ export default function AppNavbar() {
 				className="d-flex align-items-center"
 				href={userContext.user.username ? "/" : ""}
 			>
-				<img src={getImageUrl("/logo.svg")} className="logo" />
+				<img src={getImageUrl("logo.svg")} className="logo" />
 				<span className="d-flex flex-column ms-2">
 					{APP_NAME}
 					{userContext.user.restaurantName && (
