@@ -19,7 +19,8 @@ export default function Player(props: PlayerPropType) {
 									className="rounded"
 									alt="track image"
 									src={props.track.image}
-									width="10%"
+									width="70px"
+									height="70px"
 								/>
 							)}
 							<span className="me-auto ms-2">

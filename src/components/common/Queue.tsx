@@ -24,7 +24,8 @@ export default function Queue(props: PropType) {
 								alt="track image"
 								className="rounded"
 								src={track.image}
-								width="7%"
+								width="50px"
+								height="50px"
 							/>
 							<div className="d-flex flex-column mt-2 ms-4">
 								<h6>{track.name}</h6>
