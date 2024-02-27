@@ -8,10 +8,12 @@ $warning: #ffc107;
 $danger: #dc3545;
 $light: #f8f9fa;
 $dark: #51216bff;
+$pdfBackground: #fcf7fe;
 
 :export {
 	success: $success;
 	danger: $danger;
 	primary: $primary;
 	dark: $dark;
+	pdfBackground: $pdfBackground;
 }

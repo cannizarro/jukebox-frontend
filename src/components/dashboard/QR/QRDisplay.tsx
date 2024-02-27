@@ -29,7 +29,7 @@ export default function QRDisplay(props: PropsType){
     return (
         <Modal isOpen={props.modal} toggle={props.toggle}>
         <ModalHeader toggle={props.toggle}>QR code for {userContext.user.restaurantName ? userContext.user.restaurantName : "your restaurant"}</ModalHeader>
-        <ModalBody>
+        <ModalBody style={{backgroundColor: colors.pdfBackground}}>
             <div className="d-flex justify-content-center align-items-center">
                 <QRCode
                     value={window.location.origin + "/" + userContext.user.username}
@@ -37,8 +37,10 @@ export default function QRDisplay(props: PropsType){
                     eyeColor={colors.dark}
                     eyeRadius={5}
                     logoImage={getImageUrl("logo-qr.svg")}
+                    logoPadding={1}
                     removeQrCodeBehindLogo={true}
                     size={400}
+                    bgColor={colors.pdfBackground}
                 />
             </div>
             {/* {qrDataUrl && <PDFDoc dataUrl={qrDataUrl}/>} */}
