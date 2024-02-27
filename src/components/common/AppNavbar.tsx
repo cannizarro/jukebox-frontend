@@ -11,10 +11,10 @@ import { logoutUser } from "../../actions/userActions";
 import { UserContext } from "../../providers/UserContextProvider";
 import { APP_NAME } from "../../constants/constants";
 import CustomLink, { PropType as LinkPropType } from "./CustomLink";
-import QRCodeComponent from "../dashboard/QRCode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode } from "@fortawesome/free-solid-svg-icons";
 import { getImageUrl } from "../../utils/genericUtils";
+import QRDisplay from "../dashboard/QR/QRDisplay";
 
 export default function AppNavbar() {
 	const userContext = useContext(UserContext);
@@ -89,7 +89,7 @@ export default function AppNavbar() {
 					</Collapse>
 				</>
 			)}
-			<QRCodeComponent modal={modal} toggle={toggle}/>
+			<QRDisplay modal={modal} toggle={toggle}/>
 		</Navbar>
 	);
 }
