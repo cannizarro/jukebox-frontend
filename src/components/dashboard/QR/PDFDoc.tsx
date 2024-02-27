@@ -1,10 +1,8 @@
 import { Page, Text, View, Document, StyleSheet, Image, Font, Svg, Line } from '@react-pdf/renderer';
 import { colors } from '../../../constants/colors';
-import Roboto from '../../../fonts/roboto-mono-v23-latin-regular.ttf';
 import Lobster from '../../../fonts/lobster-v30-latin-regular.ttf';
 import KodeMono from '../../../fonts/kode-mono-v1-latin-regular.ttf';
 
-Font.register({family: "Roboto", src: Roboto})
 Font.register({family: "Lobster", src: Lobster})
 Font.register({family: "KodeMono", src: KodeMono})
 

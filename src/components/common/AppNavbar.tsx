@@ -1,7 +1,10 @@
 import { useContext, useState } from "react";
 import {
-	Button,
 	Collapse,
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownToggle,
 	Nav,
 	Navbar,
 	NavbarBrand,
@@ -12,13 +15,14 @@ import { UserContext } from "../../providers/UserContextProvider";
 import { APP_NAME } from "../../constants/constants";
 import CustomLink, { PropType as LinkPropType } from "./CustomLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQrcode } from "@fortawesome/free-solid-svg-icons";
+import { faQrcode, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { getImageUrl } from "../../utils/genericUtils";
 import QRDisplay from "../dashboard/QR/QRDisplay";
 
 export default function AppNavbar() {
 	const userContext = useContext(UserContext);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
@@ -66,26 +70,34 @@ export default function AppNavbar() {
 				<>
 					<NavbarToggler
 						onClick={() => {
-							setIsOpen(!isOpen);
+							setIsNavbarOpen(!isNavbarOpen);
 						}}
 					/>
-					<Collapse isOpen={isOpen} navbar>
+					<Collapse isOpen={isNavbarOpen} navbar>
 						<Nav style={{ width: "100%" }} navbar>
 							{navs.map(nav => <CustomLink key={nav.to} {...nav}/>)}
+							<Dropdown 
+							nav 
+							className={isNavbarOpen ? "ms-2": "ms-auto"} 
+							isOpen={isDropdownOpen}
+							toggle={() => setIsDropdownOpen(!isDropdownOpen)}
+							>
+								<DropdownToggle nav caret className={ isDropdownOpen ? "text-light" : "text-muted-light"}>
+									Actions
+								</DropdownToggle>
+								<DropdownMenu >
+									<DropdownItem onClick={toggle}>
+										<FontAwesomeIcon className="me-2" icon={faQrcode} />
+										Show QR
+									</DropdownItem>
+									<DropdownItem divider />
+									<DropdownItem onClick={() => logoutUser(userContext.dispatch)}>
+										<FontAwesomeIcon className="me-2" icon={faRightFromBracket} />
+										Logout
+									</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
 						</Nav>
-						<Button
-							onClick={toggle}
-							className="ms-auto me-4"
-						>
-							<FontAwesomeIcon icon={faQrcode} />
-						</Button>
-						<Button
-							onClick={() =>
-								logoutUser(userContext.dispatch)
-							}
-						>
-							Logout
-						</Button>
 					</Collapse>
 				</>
 			)}

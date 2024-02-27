@@ -29,4 +29,5 @@ type ColorType = {
 	primary: string;
 	dark: string;
 	pdfBackground: string;
+	primaryLight: string;
 };
