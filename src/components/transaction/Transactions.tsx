@@ -64,20 +64,25 @@ export default function Transactions(){
                 />
             }
             {
-                transactionPage.transactions &&
-                <ReactDataGrid className="rounded rdg-light" columns={columns(handleHeaderClick)} rows={transactionPage.transactions} sortColumns={sortColumns(getSortDirection(transactionPage.request.ascending))}/>
+                transactionPage.loading ? 
+                    <div className="dot-pulse m-auto" /> :
+                    transactionPage.transactions &&
+                    <ReactDataGrid className="rounded rdg-light" columns={columns(handleHeaderClick)} rows={transactionPage.transactions} sortColumns={sortColumns(getSortDirection(transactionPage.request.ascending))}/>
             }
-            <Pagination className="align-self-end justify-content-center mt-2">
-                <PaginationItem disabled={transactionPage.currentKey==="firstKey"}>
-                    <PaginationLink onClick={handlePrev} previous/>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink disabled={true}>{getPage()}</PaginationLink>
-                </PaginationItem>
-                <PaginationItem disabled={transactionPage.nextKey==="lastKey"}>
-                    <PaginationLink onClick={handleNext} next/>
-                </PaginationItem>
-            </Pagination>
+            {
+                !(transactionPage.loading || transactionPage.error) &&
+                <Pagination className="align-self-end justify-content-center mt-2">
+                    <PaginationItem disabled={transactionPage.currentKey==="firstKey" || transactionPage.loading}>
+                        <PaginationLink onClick={handlePrev} previous/>
+                    </PaginationItem>
+                    <PaginationItem>
+                        <PaginationLink disabled={true}>{getPage()}</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem disabled={transactionPage.nextKey==="lastKey" || transactionPage.loading}>
+                        <PaginationLink onClick={handleNext} next/>
+                    </PaginationItem>
+                </Pagination>
+            }
         </div>
     );
 }

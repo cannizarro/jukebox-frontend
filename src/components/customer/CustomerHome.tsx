@@ -35,7 +35,13 @@ export default function CustomerHome() {
 			{customerState.loading ?
 				<div className="dot-pulse ms-auto me-auto my-4" /> :
 				<>
-				{customerState.track?.id && <Search username={params.username} secondsQueued={customerState.secondsQueued + customerState.track.length}/>}
+				{
+					customerState.track?.id && 
+					<>
+						<Search username={params.username} secondsQueued={customerState.secondsQueued + customerState.track.length}/>
+						<div className="px-2 pt-2">Now Playing: </div>
+					</>
+				}
 				<Player
 					{...{
 						...customerState,
@@ -46,7 +52,13 @@ export default function CustomerHome() {
 						actionInProcess: false,
 					}}
 				/>
-				{isPopulated(customerState.queue) && <Queue {...customerState} secondsQueued={null} username={null}/>}
+				{
+					isPopulated(customerState.queue) && 
+					<>
+						<div className="px-2 pt-2">Songs already in queue: </div>
+						<Queue {...customerState} secondsQueued={null} username={null}/>
+					</>
+				}
 				</>
 			}
 		</div>

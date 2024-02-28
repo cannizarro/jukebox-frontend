@@ -1,4 +1,4 @@
-import { ActionType, CLEAR_TRANSACTION_ERROR, TRANSACTION_ACTION_FAILURE, TRANSACTION_ACTION_SUCCESSFULL, UPDATE_SORT_DIRECTIION as UPDATE_SORT_DIRECTIION } from "../actions/constants/actionTypes";
+import { ActionType, CLEAR_TRANSACTION_ERROR, TRANSACTION_ACTION_FAILURE, TRANSACTION_ACTION_SUCCESSFULL, TRANSACTION_LOADING, UPDATE_SORT_DIRECTIION as UPDATE_SORT_DIRECTIION } from "../actions/constants/actionTypes";
 import { FIRST_PAGE_START_KEY } from "../constants/constants";
 
 export default function transactionReducer(state: TransactionPageType, action: ActionType): TransactionPageType{
@@ -15,13 +15,20 @@ export default function transactionReducer(state: TransactionPageType, action: A
             return {
                 ...state,
                 ...action.payload,
-                nextKey: action.payload.nextKey
+                nextKey: action.payload.nextKey,
+                loading: false
             };
         case TRANSACTION_ACTION_FAILURE:
             return {
                 ...state,
-                error: action.payload.message
+                error: action.payload.message,
+                loading: false
             } as TransactionPageType;
+        case TRANSACTION_LOADING:
+            return {
+                ...state,
+                loading: true
+            };
         case CLEAR_TRANSACTION_ERROR:
             return {
                 ...state,
@@ -55,7 +62,8 @@ export type TransactionPageType = {
     transactions: Array<TransactionType>;
     error: string;
     pageKeys: Array<string>;
-    request: TransactionPageRequestType
+    request: TransactionPageRequestType;
+    loading: boolean;
 }
 
 export type TransactionPageRequestType = {

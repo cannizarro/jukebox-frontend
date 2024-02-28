@@ -28,4 +28,6 @@ type ColorType = {
 	danger: string;
 	primary: string;
 	dark: string;
+	pdfBackground: string;
+	primaryLight: string;
 };
