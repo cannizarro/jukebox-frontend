@@ -3,17 +3,23 @@ import { NavItem, NavLink } from "reactstrap";
 
 export default function CustomLink(props: PropType){
 	return (
-		<NavItem className="mx-2">
+		<NavItem className={"mx-2" + (props.isLast ? " me-auto" : "")}>
 			<NavLink
 				tag={RRLink}
-				{...props}
+				children={props.children}
+				to={props.to}
+				target={props.target}
 			/>
 		</NavItem>
 	);
 }
 
-export type PropType = {
-    children: React.ReactNode,
-    to: string,
-    target: string
+type PropType = LinkPropType & {
+	isLast: boolean;
+}
+
+export type LinkPropType = {
+	children: React.ReactNode;
+    to: string;
+    target: string;
 }

@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { UserContext } from "../../../providers/UserContextProvider";
 import { useContext } from "react";
 import { PDFDoc } from "./PDFDoc";
@@ -12,7 +12,7 @@ import html2canvas from "html2canvas";
 export default function QRDisplay(props: PropsType){
     
     const userContext = useContext(UserContext);
-    const [instance, updateInstance] = usePDF({document: <></>});
+    const [instance, updateInstance] = usePDF();
     
     const fileName = (userContext.user.restaurantName ? 
             userContext.user.restaurantName : 
@@ -39,24 +39,27 @@ export default function QRDisplay(props: PropsType){
                     logoImage={getImageUrl("logo-qr.svg")}
                     logoPadding={1}
                     removeQrCodeBehindLogo={true}
-                    size={400}
+                    size={250}
                     bgColor={colors.pdfBackground}
+                    fgColor={colors.dark}
                 />
             </div>
-            {/* {qrDataUrl && <PDFDoc dataUrl={qrDataUrl}/>} */}
+            {instance.error && <Alert className="mt-2" color="danger">{instance.error}</Alert>}
         </ModalBody>
         <ModalFooter>
             {
-                !instance.loading && !instance.error && instance.blob?
-                <a 
-                    className="btn btn-primary"
-                    href={instance.url as string} download={fileName}
-                >
-                    Download
-                </a> :
-                <Button color="primary" onClick={handleDownloadClick}>
-                    Generate PDF
-                </Button>
+                instance.loading ? 
+                    <div className="dot-pulse mx-4"/> :
+                    !instance.error && instance.blob?
+                    <a 
+                        className="btn btn-primary"
+                        href={instance.url as string} download={fileName}
+                    >
+                        Download
+                    </a> :
+                    <Button color="primary" onClick={handleDownloadClick}>
+                        Generate PDF
+                    </Button>
             }
             
             <Button color="secondary" onClick={props.toggle}>

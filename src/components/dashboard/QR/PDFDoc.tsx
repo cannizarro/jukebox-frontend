@@ -10,7 +10,7 @@ Font.register({family: "KodeMono", src: KodeMono})
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
-        backgroundColor: colors.pdfBackground,
+        backgroundColor: colors.pdfBackground
     },
     section: {
         flexDirection: 'column',
@@ -21,14 +21,23 @@ const styles = StyleSheet.create({
         width: 250
     },
     text: {
-        fontFamily: "KodeMono"
+        fontFamily: "KodeMono",
+        color: colors.dark
     },
     textFeel: {
         fontFamily: "Lobster",
         fontSize: 30,
         marginBottom: 20,
-        marginTop: 5
-    }
+        marginTop: 5,
+        color: colors.dark
+    },
+    pageBackground: {
+        position: "absolute",
+        minWidth: "100%",
+        minHeight: "100%",
+        height: "100%",
+        width: "100%",
+      },
 });
 
 export function PDFDoc(props: PropsType){
