@@ -13,7 +13,7 @@ import {
 import { logoutUser } from "../../actions/userActions";
 import { UserContext } from "../../providers/UserContextProvider";
 import { APP_NAME } from "../../constants/constants";
-import CustomLink, { PropType as LinkPropType } from "./CustomLink";
+import CustomLink, { LinkPropType } from "./CustomLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQrcode, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { getImageUrl } from "../../utils/genericUtils";
@@ -75,10 +75,18 @@ export default function AppNavbar() {
 					/>
 					<Collapse isOpen={isNavbarOpen} navbar>
 						<Nav style={{ width: "100%" }} navbar>
-							{navs.map(nav => <CustomLink key={nav.to} {...nav}/>)}
+							{
+								navs.map((nav, index, array) => 
+									<CustomLink 
+									key={nav.to} 
+									isLast={array.length-1===index} 
+									{...nav}
+									/>
+								)
+							}
 							<Dropdown 
 							nav 
-							className={isNavbarOpen ? "ms-2": "ms-auto"} 
+							className="ms-2"
 							isOpen={isDropdownOpen}
 							toggle={() => setIsDropdownOpen(!isDropdownOpen)}
 							>
